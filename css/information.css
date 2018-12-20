@@ -1,0 +1,70 @@
+html,body
+{
+    margin: 0;
+    padding: 0;
+    font-family:微软雅黑;
+
+}
+a{
+	text-decoration:none; 
+}
+#head{
+	width: 100%;
+}
+#head_img{
+	    filter: url(blur.svg#blur); /* FireFox, Chrome, Opera */
+    
+    -webkit-filter: blur(8px); /* Chrome, Opera */
+       -moz-filter: blur(8px);
+        -ms-filter: blur(8px);    
+            filter: blur(8px);
+    
+    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=8, MakeShadow=false); /* IE6~IE9 */
+}
+#user_headimgurl{
+	border-radius: 50%;
+	
+}
+#user_sex{
+	width: 20px;
+	
+}
+
+#user_massage{
+	width:70%;
+	color: #808080;
+	font-size: 13px;
+	word-wrap:break-word; 
+	word-break:break-all; 
+	overflow: hidden; 
+}
+.word{
+	font-size: 13px;
+	color: #808080;
+}
+.word_big{
+	font-size: 14px;
+	color: #222222;
+}
+.img img{
+	width: 20%;
+}
+#Interest img{
+	width: 80%;
+}
+#list{
+	width: 100%;
+	font-size: 12px;
+	color: #808080;	
+}
+.hobbys img{
+	border: 1px solid #EAEAEA;
+	border-radius: 10px;
+	float: left;
+	margin-left: 5px;
+}
+#contact{
+	font-size: 15px;
+	margin-left: 20px;
+}
+

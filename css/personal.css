@@ -1,0 +1,11 @@
+*{margin:0;padding:0;box-sizing:border-box;list-style:none}
+a{outline:0;text-decoration:none}
+::selection{background:#1EACDF;color:#fff}
+img{border:0}
+
+.marquee-box{overflow:hidden;width:100%;position:absolute;left:0;top:0}
+.marquee{width:8000%;height:60px}
+.wave-list-box{float:left}
+.wave-list-box ul{float:left;height:60px;overflow:hidden;zoom:1}
+.wave-list-box ul li{height:60px;width:100%;float:left;line-height:30px;list-style:none}
+.wave-box{position:relative;height:60px;background:#fff}

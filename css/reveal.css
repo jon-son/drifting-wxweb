@@ -1,0 +1,171 @@
+/*	--------------------------------------------------
+	Reveal Modals
+	-------------------------------------------------- */
+
+.reveal-modal-bg {
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	background: rgba(0, 0, 0, .8);
+	z-index: 100;
+	display: none;
+	top: 0;
+	left: 0;
+}
+
+.reveal-modal {
+	visibility: hidden;
+	top: 120px;
+	width: 60%;
+	margin-left: 20%;
+	background: #eee url(modal-gloss.png) no-repeat -200px -80px;
+	position: absolute;
+	z-index: 101;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+	-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
+
+.reveal-modal .close-reveal-modal {
+	font-size: 22px;
+	line-height: .5;
+	position: absolute;
+	top: 8px;
+	right: 11px;
+	color: #aaa;
+	text-shadow: 0 -1px 1px rbga(0, 0, 0, .6);
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.reveal-modal img {
+	width: 100%;
+	border-radius: 5px 5px 0 0;
+}
+
+.reveal_sex {
+	visibility: hidden;
+	top: 180px;
+	width: 60%;
+	margin-left: 20%;
+	padding-bottom: 80px;
+	background: white;
+	position: absolute;
+	z-index: 101;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+	-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
+
+.reveal_sex .close-reveal-modal {
+	font-size: 22px;
+	line-height: .5;
+	position: absolute;
+	top: 8px;
+	right: 11px;
+	color: #aaa;
+	text-shadow: 0 -1px 1px rbga(0, 0, 0, .6);
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.reveal_photo {
+	visibility: hidden;
+	top: 180px;
+	width: 90%;
+	margin-left: 5%;
+	position: absolute;
+	z-index: 101;
+
+}
+
+.reveal_photo .close-reveal-modal {
+	font-size: 22px;
+	line-height: .5;
+	position: absolute;
+	top: 8px;
+	right: 11px;
+	color: #aaa;
+	text-shadow: 0 -1px 1px rbga(0, 0, 0, .6);
+	font-weight: bold;
+	cursor: pointer;
+}
+
+
+#boy {
+	margin-top: 50px;
+	width: 100%;
+	border-radius: 50%;
+	box-shadow: 0 5px 20px #EAEAEA;
+	background-color: #EAEAEA;
+	border: 1px solid #EAEAEA;
+}
+
+#girl {
+	margin-top: 50px;
+	width: 100%;
+	border-radius: 50%;
+	box-shadow: 0 5px 20px #EAEAEA;
+	background-color: #EAEAEA;
+	border: 1px solid #EAEAEA;
+}
+
+.reveal_hobbys {
+	visibility: hidden;
+	top: 120px;
+	width: 60%;
+	margin-left: 20%;
+	background: #eee url(modal-gloss.png) no-repeat -200px -80px;
+	position: absolute;
+	z-index: 101;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+	-webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+	-box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+}
+
+.hobbys_labels {
+	margin-top: 20px;
+	width: 80%;
+}
+
+.hobbys_labels p {
+	margin-bottom: 10px;
+}
+
+.hobbys_labels img {
+	margin: 2px;
+	height: 20px;
+	border: 1px solid #808080;
+	border-radius: 15px;
+	background-color: #EAEAEA;
+}
+
+.click {
+	background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+}
+
+.unclick {
+	background-color: #EAEAEA;
+}
+
+.reveal_hobbys .close-reveal-modal {
+	font-size: 22px;
+	line-height: .5;
+	position: absolute;
+	top: 8px;
+	right: 11px;
+	color: #aaa;
+	text-shadow: 0 -1px 1px rbga(0, 0, 0, .6);
+	font-weight: bold;
+	cursor: pointer;
+}

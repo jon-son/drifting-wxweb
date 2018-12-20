@@ -1,0 +1,179 @@
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-family: "微软雅黑";
+	color: white;
+}
+
+a {
+	text-decoration: none;
+}
+
+h3 {
+	text-align: center;
+	color: #555;
+	margin-bottom: 0;
+}
+
+
+/*头部*/
+
+
+/*1.1半椭圆底部背景*/
+
+.introduce {
+	max-width: 100%;
+	height: 130px;
+	background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+	border-radius: 0 0 15% 15%;
+	position: relative;
+}
+
+#introduce_scroll {
+	max-width: 100%;
+	height: 60px;
+	width: 100%;
+	color: black;
+	background-color: white;
+	box-shadow: 0 .1px 20px #808080;
+	margin-top: -130px;
+	position: fixed;
+	z-index: 9999;
+	display: none;
+}
+
+
+/*1.2个人中心*/
+
+.personal_center {
+	color: white;
+}
+
+.picture img {
+	width: 40px;
+	border-radius: 50%;
+}
+
+.picture_scroll img {
+	width: 35px;
+	border-radius: 50%;
+}
+
+.username a {
+	color: white;
+}
+
+.username a:visited {
+	color: white
+}
+
+.username_scroll a {
+	color: #808080;
+}
+.username_scroll a:visited {
+	color: #808080;
+}
+.username p {
+	float: left;
+	text-align: center;
+	line-height: 25px;
+	font-size: 20px;
+}
+
+.setting img {
+	float: left;
+	width: 50%;
+}
+
+
+/*2.状态卡片*/
+
+.state {
+	width: 90%;
+	box-shadow: 0 .1px 10px #EAEAEA;
+	background-color: white;
+	margin-top: -60px;
+	border-radius: 5px;
+	position: relative;
+}
+
+
+/*2.1漂茶状态*/
+
+.drift_state {
+	text-align: center;
+	height: 100px;
+	font-weight: 600;
+}
+
+
+.drift_state_tr td img {
+	height: 55px;
+
+}
+
+
+/*2.2漂茶*/
+
+.drift {
+	height: 50px;
+	border-top: 0.1px solid #EAEAEA;
+}
+
+.to_drift img {
+	height: 25px;
+	margin-top: 10px;
+	float: right;
+	margin-right: 10px;
+}
+
+
+/*功能区*/
+
+
+/*1.兴趣漂*/
+
+.hobby {
+	width: 90%;
+	height: 150px;
+	box-shadow: 0 .1px 20px #EAEAEA;
+	background-color: white;
+	border-radius: 5px;
+}
+.nearby{
+	width: 90%;
+	height: 150px;
+	box-shadow: 0 .1px 20px #EAEAEA;
+	background-color: white;
+	border-radius: 5px;
+}
+
+.hobby_dirft_null {
+	height: 80px;
+}
+
+.hobby_dirft img {
+	height: 47px;
+	margin-top: 5px;
+	float: right;
+	margin-right: 5%;
+}
+
+
+/*地图*/
+
+.map {
+	width: 90%;
+	height: 180px;
+	background-color: white;
+	border-radius: .5rem;
+}
+
+.maplogo {
+	width: 100%;
+	height: 150px;
+	box-shadow: 0 .1px 20px #EAEAEA;
+	background-color: white;
+	border-radius: 5px;
+}
