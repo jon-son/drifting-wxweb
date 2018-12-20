@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<title>查看漂茶状态</title>
+	</head>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: "微软雅黑";
+			color: white;
+		}
+		
+		#head_img {
+			filter: url(blur.svg#blur);
+			/* FireFox, Chrome, Opera */
+			-webkit-filter: blur(8px);
+			/* Chrome, Opera */
+			-moz-filter: blur(8px);
+			-ms-filter: blur(8px);
+			filter: blur(8px);
+			filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=8, MakeShadow=false);
+			/* IE6~IE9 */
+		}
+		
+		#head_full {
+			border-radius: 50%;
+			width: 100%;
+		}
+		
+		#word {
+			z-index: 99;
+			width: 100%;
+			border: .5px solid #EAEAEA;
+			border-radius: 20px;
+			text-align: center;
+			outline: none;
+		}
+	</style>
+
+	<body>
+		<table style="height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/pay_status.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+
+		<div id="head" style="overflow: hidden;width: 100%;">
+			<img id="head_img" style="width: 100%;" />
+		</div>
+		<div id="head_full_div" style="position:absolute;z-index: 99;width:100%;">
+			<img id="head_full" style="margin-left: 40%;width: 20%;" />
+			<img id="sex_full" style="width: 5%;margin-left: -7%;" />
+		</div>
+		<div style="position:absolute;width:100%;">
+			<input id="word" disabled="readonly" style="margin-left: 15%; width: 70%;background-color: white;" />
+		</div>
+		<div align="center" style="width: 70%;margin-top: 100px;margin-left:15%;border-radius: 20px;border: 1px solid #EAEAEA;color: black;">
+			<h4>漂茶时间</h3>
+			<p id="time" style="font-size: 15px;color: #808080;"></p>
+			<h4>漂茶订单号</h3>
+			<p id="teaid" style="font-size: 15px;color: #808080;"></p>
+			</br>
+		</div>
+	</br>
+	</body>
+	<script src="../js/get.js"></script>
+		<script>	
+		var height = $(window).height();
+		var width = $(window).width();
+		var teaid = GetRequest();
+		$.ajax({
+			url : "http://www.xxxx.com/api/teas/"+teaid+"?type=main",
+			type : "get",
+			async : false,
+			success : function(res){
+				$.ajax({
+					url :"http://www.xxxx.com/api/users/"+res.from_openid+"?type=main",
+					type : "get",
+					async:false,
+					success:function(main_res){	
+						var time = time_change(res.send_time)
+						$("#time").text(time);
+						$("#teaid").text(teaid);
+						$("#head").css("height", height / 5 + width * 0.2 + "px");
+						$("#head_img").attr("src", main_res.user_headimgurl);
+						$("#head_full").attr("src", main_res.user_headimgurl);	
+						if(main_res.user_sex == "1") {
+							$("#sex_full").attr("src", "../icon/sex_boy.png");
+						}
+						if(main_res.user_sex == "2") {
+							$("#sex_full").attr("src", "../icon/sex_girl.png");
+						}
+						$("#head_full_div").css("margin-top", -height / 17 - width * 0.2 + "px");
+						$("#word").css("height", height / 9 + "px");
+						$("#word").css("margin-top", -height / 6 - width * 0.2 + "px");
+						$("#word").val(res.flow_text);
+						$("#word").css("pointer-events", "none");
+					},
+					error:function(main_e){
+						window.location.href = "javascript:history.back(-1);";
+					}
+				})
+
+			}
+		})
+
+	
+		
+		
+
+		
+
+
+		
+		
+		function time_change(time) {
+			var date = new Date(time);
+			var seperator1 = "-";
+			var seperator2 = ":";
+			var month = date.getMonth() + 1;
+			var strDate = date.getDate();
+			if(month >= 1 && month <= 9) {
+				month = "0" + month;
+			}
+			if(strDate >= 0 && strDate <= 9) {
+				strDate = "0" + strDate;
+			}
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+				" " + date.getHours() + seperator2 + date.getMinutes() +
+				seperator2 + date.getSeconds();
+			return currentdate;
+		}
+
+		
+	</script>
+
+</html>

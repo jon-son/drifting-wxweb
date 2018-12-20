@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<title>支付状态</title>
+	</head>
+	<style>
+		body,
+		html {
+			padding: 0;
+			margin: 0;
+			font-size: 20px;
+		}
+		
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		
+		p {
+			height: 20px;
+			line-height: 20px;
+		}
+		
+		.word {
+			width: 70%;
+			font-size: 14px;
+			margin-left: 10%;
+		}
+		
+		#coupon {
+			width: 80%;
+			margin-top: 120px;
+			margin-left: 10%;
+			background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+			border-radius: 20px;
+			color: white;
+		}
+	</style>
+
+	<body>
+		<table style="margin-top: -120px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-2);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/pay_status.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+		<div id="coupon" align="center">
+			</br>
+			<p style="font-size: 25px;">支付成功</p>
+			<img src="../icon/pay_yes.png" style="width: 30%;margin-top: 20px;">
+			<p style="font-size: 15px;">恭喜你</p>
+			<p style="font-size: 15px;">本次支付已成功</p>
+			</br>
+		</div>
+		
+		</br>
+		<p class="word">1.微信搜索关注服务号:xxx</p>
+		<p class="word">2.点击菜单栏上的*xxx*按钮</p>
+		<p class="word">3.选择性别及漂茶地区</p>
+		<p class="word">4.即刻开始漂茶之旅</p>
+	</body>
+
+</html>

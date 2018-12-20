@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<title></title>
+	</head>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: "微软雅黑";
+			color: white;
+		}
+		
+		#head_img {
+			filter: url(blur.svg#blur);
+			/* FireFox, Chrome, Opera */
+			-webkit-filter: blur(8px);
+			/* Chrome, Opera */
+			-moz-filter: blur(8px);
+			-ms-filter: blur(8px);
+			filter: blur(8px);
+			filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=8, MakeShadow=false);
+			/* IE6~IE9 */
+		}
+		
+		#head_full {
+			border-radius: 50%;
+			width: 100%;
+		}
+		
+		#word {
+			z-index: 99;
+			width: 100%;
+			border: .5px solid #EAEAEA;
+			border-radius: 20px;
+			text-align: center;
+			outline: none;
+		}
+		
+		.word {
+			width: 70%;
+			font-size: 14px;
+			margin-left: 10%;
+		}
+		
+		#coupon {
+			width: 80%;
+			margin-top: 120px;
+			margin-left: 10%;
+			background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+			border-radius: 20px;
+			color: white;
+		}
+	</style>
+
+	<body>
+		<div id="usesuccess" style="display: none;">
+			<table style="height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+				<td style="width: 45px;float: left;">
+					<a href="javascript:history.back(-1);" style="color: white;">
+						<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+					</a>
+				</td>
+				<td align="center">
+					<img src="../icon/pay_status.png" style="height: 35px;margin-top: 5px;" />
+				</td>
+				<td style="width: 45px;float: right;">
+				</td>
+			</table>
+
+			<div id="head" style="overflow: hidden;width: 100%;">
+				<img id="head_img" style="width: 100%;" />
+			</div>
+			<div id="head_full_div" style="position:absolute;z-index: 99;width:100%;">
+				<img id="head_full" style="margin-left: 40%;width: 20%;" />
+				<img id="sex_full" style="width: 5%;margin-left: -7%;" />
+			</div>
+			<div style="position:absolute;width:100%;">
+				<input id="word" disabled="readonly" style="margin-left: 15%; width: 70%;background-color: white;" />
+			</div>
+			<div align="center" style="width: 70%;margin-top: 100px;margin-left:15%;border-radius: 20px;border: 1px solid #EAEAEA;color: black;">
+				<h4>漂茶时间</h3>
+			<p id="time" style="font-size: 15px;color: #808080;"></p>
+			<h4>漂茶订单号</h3>
+			<p id="teaid" style="font-size: 15px;color: #808080;"></p>
+			</br>
+		</div>
+	</br>
+	</div>
+	<div id="waitting">
+				<table style="margin-top: -120px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/pay_status.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+		<div id="coupon" align="center">
+			</br>
+			<p style="font-size: 25px;">支付中...</p>
+			<img id="img_wait" src="../icon/wait.png" style="width: 30%;margin-top: 20px;">
+			<p style="font-size: 15px;">请稍等</p>
+			<p style="font-size: 15px;">等待支付中</p>
+			</br>
+		</div>
+		
+		</br>
+		<p class="word">1.微信搜索关注服务号:xxx</p>
+		<p class="word">2.点击菜单栏上的*xxx*按钮</p>
+		<p class="word">3.选择性别及漂茶地区</p>
+		<p class="word">4.即刻开始漂茶之旅</p>
+	</div>
+		<div id="paysuccess" style="display: none;">
+				<table style="margin-top: -120px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/pay_status.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+		<div id="coupon" align="center">
+			</br>
+			<p style="font-size: 25px;">支付成功</p>
+			<img src="../icon/pay_yes.png" style="width: 30%;margin-top: 20px;">
+			<p style="font-size: 15px;">恭喜你</p>
+			<p style="font-size: 15px;">本次支付已成功</p>
+			</br>
+		</div>
+		
+		</br>
+		<p class="word">1.微信搜索关注服务号:xxx</p>
+		<p class="word">2.点击菜单栏上的*xxx*按钮</p>
+		<p class="word">3.选择性别及漂茶地区</p>
+		<p class="word">4.即刻开始漂茶之旅</p>
+	</div>
+	
+	</body>
+	<script src="../js/get.js"></script>
+	<script src="../js/jquery.rotate.min.js"></script>
+	<script>
+		var height = $(window).height();
+		var width = $(window).width();
+		var couponid = GetRequest(1);
+		var shopid = GetRequest(2);
+		var teaid = GetRequest(3);
+		var type1 = GetRequest(4);
+		var ip = returnCitySN.cip;
+		var angle = 0;
+		setInterval(function(){
+		    angle +=3;
+		    $('#img_wait').rotate(angle);
+		}, 50);
+		if(type1=="1"&&teaid!="null"){
+		$.ajax({
+			url : "http://www.xxxx.com/api/teas/"+teaid+"?type=main",
+			type : "get",
+			async : false,
+			success : function(res){
+				console.log(res)
+				$.ajax({
+					url :"http://www.xxxx.com/api/users/"+res.from_openid+"?type=main",
+					type : "get",
+					async:false,
+					success:function(main_res){	
+						var time = time_change(res.send_time)
+						$("#time").text(time);
+						$("#teaid").text(teaid);
+						$("#head").css("height", height / 5 + width * 0.2 + "px");
+						$("#head_img").attr("src", main_res.user_headimgurl);
+						$("#head_full").attr("src", main_res.user_headimgurl);	
+						if(main_res.user_sex == "1") {
+							$("#sex_full").attr("src", "../icon/sex_boy.png");
+						}
+						if(main_res.user_sex == "2") {
+							$("#sex_full").attr("src", "../icon/sex_girl.png");
+						}
+						$("#head_full_div").css("margin-top", -height / 17 - width * 0.2 + "px");
+						$("#word").css("height", height / 9 + "px");
+						$("#word").css("margin-top", -height / 6 - width * 0.2 + "px");
+						$("#word").val(res.flow_text);
+						$("#word").css("pointer-events", "none");
+					},
+					error:function(main_e){
+						console.log(main_e)
+//						window.location.href = "javascript:history.back(-1);";
+					}
+				})
+
+			}
+		})
+
+		}
+
+		$.ajax({
+			url: "http://www.xxxx.com/api/payments?type=coupon&ip=" + ip + "&couponid=" + couponid + "&shopid=" + shopid,
+			contentType: "application/json",
+			type: "post",
+			async: true,
+			success: function(res) {
+				setTimeout(function() {
+					wx.config({
+						debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+						appId: 'xxxxxxxxxxxxxxxx', // 必填，公众号的唯一标识
+						timestamp: res.timeStamp, // 必填，生成签名的时间戳
+						nonceStr: res.nonceStr, // 必填，生成签名的随机串
+						signature: res.paySign, // 必填，签名
+						jsApiList: ['chooseWXPay'], // 必填，需要使用的JS接口列表
+					});
+					wx.chooseWXPay({
+						timestamp: res.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+						nonceStr: res.nonceStr, // 支付签名随机串，不长于 32 位
+						package: res.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+						signType: res.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+						paySign: res.paySign, // 支付签名
+						success: function(pay_res) {
+							// 支付成功后的回调函数.
+							if(type1 == "0"||(type1=="1"&&teaid=="null")) {
+								$("#waitting").css("display","none")
+								$("#paysuccess").css("display", "block")
+								
+								
+								
+							}else if(type1 == "1"&&teaid!="null"){
+								yescon = 0
+							setInterval(function(){
+								if(yescon == 0){
+									$.ajax({
+								type: "get",
+								url: "http://www.xxxx.com/api/coupons/" + couponid + "?type=ispay",
+								async: false,
+								success: function(res) {
+									
+									if(res.ispay==true){
+										yescon = 1
+										$("#waitting").css("display","none")
+										$("#usesuccess").css("display", "block")
+									}
+									
+								}
+							});
+								}
+
+					},1000)
+							}
+							},
+
+						cancel: function(can) {
+							location.href = "paywarn.html";
+						}
+
+					});
+				}, 1000)
+
+			},
+			error: function(pay_e) {
+				alert("支付失败");
+				window.location.href = "javascript:history.back(-1);";
+			}
+		});
+		function time_change(time) {
+			var date = new Date(time);
+			var seperator1 = "-";
+			var seperator2 = ":";
+			var month = date.getMonth() + 1;
+			var strDate = date.getDate();
+			if(month >= 1 && month <= 9) {
+				month = "0" + month;
+			}
+			if(strDate >= 0 && strDate <= 9) {
+				strDate = "0" + strDate;
+			}
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+				" " + date.getHours() + seperator2 + date.getMinutes() +
+				seperator2 + date.getSeconds();
+			return currentdate;
+		}
+	</script>
+
+</html>
