@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+		<title>关于我们</title>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<style>
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				font-family: 微软雅黑;
+			}
+			
+			.box {
+				width: 100%;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-top: 120px;
+			}
+			
+			.count {
+				width: 100px;
+				height: 30px;
+				background-color: #0093FF;
+				color: #FFFFFF;
+				font-size: 16px;
+				line-height: 30px;
+				border-radius: 30%;
+				text-align: center;
+				font-family: "Arial Black";
+			}
+			
+			.foot {
+				font-size: 12px;
+				margin-top: 130px;
+				color: #808080;
+			}
+			
+			.foot p {
+				height: 8px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<table style="margin-top: -120px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 1px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/about.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 1px;float: right;">
+			</td>
+		</table>
+		<div class="box">
+			<span style="color: #808080;">注册量已达 ： </span>
+			<div class="count"></div>
+		</div>
+		<div align="center" style="margin-top: 100px;">
+			<h2>去漂流<span>1.0</span></h2>
+			<p style="font-size: 13px;margin-top: -5px;">青春进行时,寻找你的那个Ta</p>
+		</div>
+
+		<div class="foot" align="center">
+			<p>官方邮箱：xxx@163.com</p>
+			<p>官网：www.xxx.cn</p>
+			<p>微信公众号：xxx</p>
+			<hr style="width: 18%;margin-top: 20px;"></hr>
+			<p>Copyright © 2017-2018</p>
+			<p>xxxx科技有限公司.All Rights Reserved</p>
+		</div>
+		</br>
+
+	</body>
+	<script type="text/javascript" src="../js/count.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$.ajax({
+				type: "get",
+				url: "http://www.xxxx.com/api/users?type=num",
+				async: true,
+				success: function(res) {
+					$(".count").numberRock({
+						lastNumber: res.usernum,
+						duration: 500, //过程速度
+						easing: 'swing', //慢快慢
+					});
+				},
+				error: function(e) {
+					$(".count").numberRock({
+						lastNumber: 134521,
+						duration: 500, //过程速度
+						easing: 'swing', //慢快慢
+					});
+				}
+			});
+
+		});
+	</script>
+
+</html>

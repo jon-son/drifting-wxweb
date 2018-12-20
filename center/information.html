@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<link rel="stylesheet" href="../css/information.css" type="text/css" />
+		<link rel="stylesheet" href="../css/reveal.css">
+
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.reveal.js"></script>
+		<title>个人资料</title>
+	</head>
+
+	<body>
+		<div id="main">
+			<table style="height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+				<td style="width: 45px;float: left;">
+					<a href="javascript:history.back(-1);" style="color: white;">
+						<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+					</a>
+				</td>
+				<td align="center">
+					<img src="../icon/information.png" style="height: 35px;margin-top: 5px;" />
+				</td>
+				<td style="width: 45px;float: right;">
+				</td>
+			</table>
+
+			<div id="head" align="center" style="z-index: -1;position :absolute;overflow:hidden;">
+				<img id="head_img" src="../icon/account.png" />
+			</div>
+
+			<div id="portrait" align="center">
+				<img id="user_headimgurl" src="../icon/cry.png" />
+				<img id="user_sex" src="../icon/sex_boy.png" />
+			</div>
+			<div align="center">
+				<p id="user_name"></p>
+				<p id="user_massage" style="width: 60%;"></p>
+			</div>
+			<div style="margin-top: 20px;border-bottom: 1px solid #EAEAEA;">
+				<table style="width: 100%;">
+					<tr align="center">
+						<td style="width: 33%;">
+							<span class="word" id="user_tryst_state"></span></br>
+							<span class="word_big">兴趣漂</span>
+						</td>
+
+						<td style="width: 33%">
+							<span class="word" id="user_age"></span></br>
+							<span class="word_big">年龄</span>
+						</td>
+
+						<td style="width: 33%;">
+							<span class="word" id="user_constellation"></span></br>
+							<span class="word_big">星座</span>
+						</td>
+					</tr>
+				</table>
+				</br>
+			</div>
+		</div>
+		<div id="show_photos" align="center">
+			<div id='big_photo0' class='reveal_photo' align='center'>
+				<img id='show_photo0' style='width: 100%;' />
+				<a class='close-reveal-modal'>&#215;</a>
+			</div>
+			<div id='big_photo1' class='reveal_photo' align='center'>
+				<img id='show_photo1' style='width: 100%;' />
+				<a class='close-reveal-modal'>&#215;</a>
+			</div>
+			<div id='big_photo2' class='reveal_photo' align='center'>
+				<img id='show_photo2' style='width: 100%;' />
+				<a class='close-reveal-modal'>&#215;</a>
+			</div>
+			<div id='big_photo3' class='reveal_photo' align='center'>
+				<img id='show_photo3' style='width: 100%;' />
+				<a class='close-reveal-modal'>&#215;</a>
+			</div>
+
+		</div>
+		<img src="../icon/pic.png" style="height: 25px;margin-left: 10px;	margin-top: 20px;" />
+		<div id="photos" style="width: 100%;margin-top: 10px;border-bottom: 1px solid #EAEAEA;">
+			<a data-reveal-id='big_photo0'>
+				<div class="div_photo" id="disno0" style='display: none;overflow: hidden;width: 24%;'>
+					<img id="photo0" style='float: left;margin-left: 1%;vertical-align: middle;' />
+				</div>
+			</a>
+			<a data-reveal-id='big_photo1'>
+				<div class="div_photo" id="disno1" style='display: none;overflow: hidden;width: 24%;'>
+					<img id="photo1" style='float: left;margin-left: 1%;vertical-align: middle;' />
+				</div>
+			</a>
+			<a data-reveal-id='big_photo2'>
+				<div class="div_photo" id="disno2" style='display: none;overflow: hidden;width: 24%;'>
+					<img id="photo2" style='float: left;margin-left: 1%;vertical-align: middle;' />
+				</div>
+			</a>
+			<a data-reveal-id='big_photo3'>
+				<div class="div_photo" id="disno3" style='display: none;overflow: hidden;width: 24%;'>
+					<img id="photo3" style='float: left;margin-left: 1%;vertical-align: middle;' />
+				</div>
+			</a>
+		</div>
+
+		<div id="center" style="border-bottom: 1px solid #EAEAEA;">
+			<img src="../icon/discount.png" style="height: 25px;margin-left: 10px;	float:none;margin-top: 20px;" />
+			<div id="Interest" style="margin-top: 10px;">
+				<table id="list">
+					<tr>
+						<td style="width: 15px;"></td>
+						<td style="width: 25px;">
+							<img src="../icon/game.png" />
+						</td>
+						<td class="hobbys">
+
+							<img id="user_hobby_game0" style="display: none;"></img>
+							<img id="user_hobby_game1" style="display: none;"></img>
+							<img id="user_hobby_game2" style="display: none;"></img>
+							<img id="user_hobby_game3" style="display: none;"></img>
+							<img id="user_hobby_game4" style="display: none;"></img>
+
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<img src="../icon/pet.png" />
+						</td>
+						<td class="hobbys">
+
+							<img id="user_hobby_pet0" style="display: none;"></img>
+							<img id="user_hobby_pet1" style="display: none;"></img>
+							<img id="user_hobby_pet2" style="display: none;"></img>
+							<img id="user_hobby_pet3" style="display: none;"></img>
+							<img id="user_hobby_pet4" style="display: none;"></img>
+
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td>
+							<img src="../icon/movie.png" />
+						</td>
+						<td class="hobbys">
+
+							<img id="user_hobby_movie0" style="display: none;"></img>
+							<img id="user_hobby_movie1" style="display: none;"></img>
+							<img id="user_hobby_movie2" style="display: none;"></img>
+							<img id="user_hobby_movie3" style="display: none;"></img>
+							<img id="user_hobby_movie4" style="display: none;"></img>
+
+						</td>
+					</tr>
+				</table>
+			</div>
+			</br>
+		</div>
+		<img src="../icon/comments.png" style="height: 25px;margin-left: 10px;	margin-top: 20px;" />
+		<div id="contact" style="margin-top: 10px;">
+			<p>WeChat : <span id="user_wechat"></span></p>
+			<p>Phone : <span id="user_phone"></span></p>
+		</div>
+		</br>
+	</body>
+	<script src="../js/get.js"></script>
+	<script type="text/javascript">
+		var width = $(window).width();
+		var openid = GetRequest();
+		var pic = new Image();
+		var img_width = new Array();
+		var img_height = new Array();
+		
+
+		var url = "http://www.xxxx.com/api/users/" + openid;
+
+		$.ajax({
+			type: "get",
+			url: url,
+			async: false,
+			success: function(res) {
+				for(var i = 0; i<4;i++){
+					if(res.user_photos[i]!="0"&&res.user_photos[i]!=null){
+						url1 = res.user_photos[i]
+						pic.src = url1;
+						img_width[i] = pic.width;
+						img_height[i] = pic.height;
+					}
+					
+				}
+				
+				
+				
+				
+				if(res.user_sex == 1) {
+					$("#user_sex").attr("src", "../icon/sex_boy.png");
+				}
+				if(res.user_sex == 2) {
+					$("#user_sex").attr("src", "../icon/sex_girl.png");
+				}
+				$("#user_headimgurl").attr("src", res.user_headimgurl);
+				$("#user_name").text(res.user_name);
+				if(res.user_message == null || res.user_message == "") {
+					$("#user_massage").text("未留下个性签名");
+				} else {
+					$("#user_massage").text(res.user_message);
+				}
+				if(jsGetAge(res.user_birth) < 0) {
+					$("#user_age").text("未设置");
+					$("#user_constellation").text("未设置");
+				} else {
+					setAstro(res.user_birth);
+					$("#user_age").text(jsGetAge(res.user_birth));
+				}
+
+				if(res.user_tryst_state == 1) {
+					$("#user_tryst_state").text("参加");
+				}
+				if(res.user_tryst_state == 0) {
+					$("#user_tryst_state").text("未参加");
+				}
+				for(var i = 0; i < img_width.length; i++) {
+
+					
+						
+						if(img_width[i] >= img_height[i]) {
+							$("#photo" + i).attr("src", res.user_photos[i]);
+							$("#photo" + i).css("height", "100%");
+							$("#show_photo" + i).attr("src", res.user_photos[i]);
+							$("#disno" + i).css("display", "inline-block");
+						} else {
+							
+							$("#photo" + i).attr("src", res.user_photos[i]);
+							$("#photo" + i).css("width", "100%");
+							$("#show_photo" + i).attr("src", res.user_photos[i]);
+							$("#disno" + i).css("display", "inline-block");
+						}
+
+					
+				}
+
+				$("#head_img").attr("src", res.user_headimgurl);
+				$("#head").css("height", width / 3 * 2 + "px");
+				$("#head_img").css("width", width + "px");
+				$("#user_headimgurl").css("width", width / 4 + "px");
+				$("#user_headimgurl").css("margin-top", width * 0.35 + "px");
+				$("#user_name").css("margin-top", width * 0.09 + "px");
+				$("#user_sex").css("margin-left", -width / 13 + "px");
+				$(".div_photo").css("height", width * 0.24 + "px");
+
+				if(res.user_hobby_game != null && res.user_hobby_game != "0" && res.user_hobby_game != "") {
+					var games = decompose(res.user_hobby_game);
+					for(var i = 0; i < games.length; i++) {
+						if(games[i] != null && games[i] != "0") {
+							
+								$("#user_hobby_" + games[i]).css("height", "20px");
+								$("#user_hobby_" + games[i]).css("width", "40px");
+								$("#user_hobby_" + games[i]).attr("src", "../icon/" + games[i] + ".png");
+								$("#user_hobby_" + games[i]).css("display", "block");
+
+						}
+					}
+				}
+				if(res.user_hobby_pet != null && res.user_hobby_pet != "0" && res.user_hobby_pet != "") {
+					var pets = decompose(res.user_hobby_pet);
+					for(var i = 0; i < pets.length; i++) {
+						if(pets[i] != null && pets[i] != "0") {
+								$("#user_hobby_" + pets[i]).css("height", "20px");
+								$("#user_hobby_" + pets[i]).css("width",  "40px");
+								$("#user_hobby_" + pets[i]).attr("src", "../icon/" + pets[i] + ".png");
+								$("#user_hobby_" + pets[i]).css("display", "block");
+
+						}
+					}
+
+				}
+				if(res.user_hobby_movie != null && res.user_hobby_movie != "0" && res.user_hobby_movie != "") {
+					var movies = decompose(res.user_hobby_movie);
+					for(var i = 0; i < movies.length; i++) {
+						if(movies[i] != null && movies[i] != "0") {
+								$("#user_hobby_" + movies[i]).css("height", "20px");
+								$("#user_hobby_" + movies[i]).css("width", "40px");
+								$("#user_hobby_" + movies[i]).attr("src", "../icon/" + movies[i] + ".png");
+								$("#user_hobby_" + movies[i]).css("display", "block");
+
+						}
+					}
+				}
+				if(res.user_wechat == null || res.user_wechat == "") {
+					$("#user_wechat").text("未设置");
+				} else {
+					$("#user_wechat").text(res.user_wechat);
+				}
+
+				if(res.user_phone == "0" || res.user_phone == null || res.user_phone == 0 || res.user_phone == "") {
+					$("#user_phone").text("未绑定");
+				} else {
+					$("#user_phone").text(res.user_phone);
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+
+		function a(i) {
+			$("#a" + i).click();
+		}
+
+		//分解hobbys
+		function decompose(hobbys) {
+			var hobby = new Array();
+			hobby = hobbys.split("/");
+			return hobby;
+		}
+		//设置星座
+		function setAstro(user_date) {
+			var month = user_date.split("-")[1];
+			var day = user_date.split("-")[2];
+			var constellation = getAstro(month, day);
+			$("#user_constellation").text(constellation + "座");
+		}
+		//计算星座
+		function getAstro(month, day) {
+			var s = "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
+			var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+			return s.substr(month * 2 - (day < arr[month - 1] ? 2 : 0), 2);
+		}
+		//根据出生日期算出年龄
+		function jsGetAge(strBirthday) {
+			var returnAge;
+			var strBirthdayArr = strBirthday.split("-");
+			var birthYear = strBirthdayArr[0];
+			var birthMonth = strBirthdayArr[1];
+			var birthDay = strBirthdayArr[2];
+
+			d = new Date();
+			var nowYear = d.getFullYear();
+			var nowMonth = d.getMonth() + 1;
+			var nowDay = d.getDate();
+
+			if(nowYear == birthYear) {
+				returnAge = 0; //同年 则为0岁  
+			} else {
+				var ageDiff = nowYear - birthYear; //年之差  
+				if(ageDiff > 0) {
+					if(nowMonth == birthMonth) {
+						var dayDiff = nowDay - birthDay; //日之差  
+						if(dayDiff < 0) {
+							returnAge = ageDiff - 1;
+						} else {
+							returnAge = ageDiff;
+						}
+					} else {
+						var monthDiff = nowMonth - birthMonth; //月之差  
+						if(monthDiff < 0) {
+							returnAge = ageDiff - 1;
+						} else {
+							returnAge = ageDiff;
+						}
+					}
+				} else {
+					returnAge = -1; //返回-1 表示出生日期输入错误 晚于今天  
+				}
+			}
+
+			return returnAge; //返回周岁年龄  
+
+		}
+	</script>
+
+</html>

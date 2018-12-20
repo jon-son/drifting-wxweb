@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title>修改个人信息</title>
+	</head>
+	<link type="text/css" rel="stylesheet" href="../css/zdialog.css" />
+	<link type="text/css" rel="stylesheet" href="../css/date.css" />
+	<link type="text/css" rel="stylesheet" href="../css/reveal.css">
+
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="../js/crop_pic/layer.m.js"></script>
+	<script type="text/javascript" src="../js/crop_pic/touch-0.2.14.min.js"></script>
+	<script type="text/javascript" src="../js/crop_pic/jquery.crop.js"></script>
+	<script type="text/javascript" src="../js/zdialog.js"></script>
+	<script type="text/javascript" src="../js/date.js"></script>
+	<script type="text/javascript" src="../js/jquery.reveal.js"></script>
+	<style>
+		body,
+		html {
+			padding: 0;
+			margin: 0;
+			font-size: 20px;
+			background-color: #FCFCFC;
+			font-family: "微软雅黑";
+		}
+		
+		table {
+			border-collapse: collapse;
+		}
+		
+		input {
+			outline: none;
+			border: none;
+			font-size: 15px;
+			color: #808080;
+			margin-left: 20px;
+		}
+		
+		.list span {
+			font-size: 15px;
+			margin-left: 20px;
+		}
+		
+		.list {
+			height: 50px;
+			border-bottom: 1px solid #EAEAEA;
+			background-color: white;
+			font-size: 17px;
+		}
+		
+		.list_title {
+			width: 60px;
+			line-height: 50px;
+		}
+		
+		.list_word {
+			width: 60px;
+			color: #808080;
+			line-height: 50px;
+		}
+		
+		.drift_word {
+			color: #808080;
+			line-height: 50px;
+		}
+		
+		.headimg {
+			float: right;
+			margin-top: 9px;
+		}
+		
+		.headimg img {
+			height: 30px;
+			border-radius: 50%;
+			border: 1px solid #EAEAEA;
+			vertical-align: middle;
+		}
+		
+		.list_more {
+			float: right;
+		}
+		
+		.list_more img {
+			height: 50px;
+			vertical-align: middle;
+		}
+		
+		.list_show {
+			float: right;
+			margin-right: 15px;
+			line-height: 50px;
+		}
+		
+		#div1 {
+			margin-top: 10px;
+			width: 60px;
+			height: 30px;
+			border-radius: 50px;
+			position: relative;
+		}
+		
+		#div2 {
+			width: 40px;
+			height: 25px;
+			border-radius: 48px;
+			position: absolute;
+			background: white;
+			box-shadow: .1px rgba(0, 0, 0, 0.4);
+		}
+		
+		.open1 {
+			background: rgba(0, 184, 0, 0.8);
+		}
+		
+		.open2 {
+			top: 2px;
+			right: 1px;
+		}
+		
+		.close1 {
+			background: rgba(255, 255, 255, 0.4);
+			border: 1px solid rgba(0, 0, 0, 0.15);
+			border-left: transparent;
+		}
+		
+		.close2 {
+			left: 1px;
+			top: 1px;
+			border: 1px solid rgba(0, 0, 0, 0.1);
+		}
+	</style>
+
+	<body id="body">
+		<div id="main">
+			<table style="margin-top: -70px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+
+				<td style="width: 45px;float: left;">
+					<a onclick="reback()" style="color: white;">
+						<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+					</a>
+				</td>
+				<td align="center">
+					<img src="../icon/set_information.png" style="height: 35px;margin-top: 5px;" />
+				</td>
+				<td style="width: 45px;float: right;">
+					<img src="../icon/save.png" style="height: 35px;margin-top: 5px;margin-right: 5px;" id="save" />
+				</td>
+			</table>
+			<a id="set_user_headimgurl">
+				<table style="margin-top: 70px;width: 100%;">
+					<tr class="list" style="border-top: 1px solid #EAEAEA;">
+						<td class="list_title" valign="middle">
+							<span>头像</span>
+						</td>
+						<td class="list_more">
+							<img src="../icon/more_black.png" />
+						</td>
+						<td class="headimg">
+							<img id="user_headimgurl" src="../icon/account.png" />
+						</td>
+					</tr>
+				</table>
+			</a>
+			<table style="width: 100%;">
+
+				<tr class="list">
+					<td class="list_title">
+						<span>签名</span>
+					</td>
+					<td>
+						<input id="user_message" maxlength="40" style="width: 90%;float: left;" />
+					</td>
+
+				</tr>
+			</table>
+			<table style="margin-top: 20px;width: 100%;">
+				<tr class="list" style="border-top: 1px solid #EAEAEA;">
+					<td class="list_title" valign="middle">
+						<span>昵称</span>
+					</td>
+					<td>
+						<input id="user_name" maxlength="32" style="width: 90%;" />
+					</td>
+				</tr>
+			</table>
+			<a data-reveal-id="set_user_sex">
+				<table style="width: 100%;">
+					<tr class="list">
+						<td class="list_title" valign="middle">
+							<span>性别</span>
+						</td>
+						<td class="list_word">
+							<span id="user_sex">男</span>
+						</td>
+						<td class="list_more">
+							<img src="../icon/more_black.png" />
+						</td>
+					</tr>
+				</table>
+			</a>
+
+			<table style="width: 100%;">
+
+				<tr class="list">
+					<td class="list_title" valign="middle">
+						<span>生日</span>
+					</td>
+					<td>
+						<input id="user_birth" class="kbtn" />
+					</td>
+					<td class="list_more">
+						<img src="../icon/more_black.png" />
+					</td>
+				</tr>
+
+				<tr class="list" style="border-top: 1px solid #EAEAEA;">
+					<td class="list_title" valign="middle">
+						<span>星座</span>
+					</td>
+					<td class="list_word">
+						<span id="constellation"></span>
+					</td>
+					<td class="list_more">
+
+					</td>
+				</tr>
+			</table>
+			<a data-reveal-id="set_user_hobbys">
+				<table style="width: 100%;">
+					<tr class="list">
+						<td class="list_title" valign="middle" style="color: black;">
+							<span>兴趣</span>
+						</td>
+						<td class="list_more">
+							<img src="../icon/more_black.png" />
+						</td>
+					</tr>
+				</table>
+			</a>
+			<div style="height: 50px;background: white;margin-left: 20px;line-height: 30px;font-size: 17px;line-height: 50px;">
+				<p>
+					相册
+				</p>
+			</div>
+			<div id="pic" style="border-top: 1px solid #EAEAEA;background-color: white;width: 100%;">
+				<img src="../icon/add.png" style="width: 24%;vertical-align: middle;margin-left: 1%;" onclick="click_add()" id="add_photo" />
+			</div>
+			<div id="" style="border-bottom: 1px solid #EAEAEA;background-color: white;width: 100%;">
+				<div style="width: 25%;float: left;" align="center">
+					<img id="no0" onclick="order_photos(0)" src="../icon/no.png" style="width: 20%;display: none;" />
+				</div>
+				<div style="width: 25%;float: left;" align="center">
+					<img id="no1" onclick="order_photos(1)" src="../icon/no.png" style="width: 20%;display: none;" />
+				</div>
+				<div style="width: 25%;float: left;" align="center">
+					<img id="no2" onclick="order_photos(2)" src="../icon/no.png" style="width: 20%;display: none;" />
+				</div>
+				<div style="width: 25%;float: left;" align="center">
+					<img id="no3" onclick="order_photos(3)" src="../icon/no.png" style="width: 20%;display: none;" />
+				</div>
+			</div>
+			<input type="file" id="fileElem" accept="image/*" style="display:none" />
+			<table style="margin-top: 40px;width: 100%;">
+				<tr class="list" style="border-top: 1px solid #EAEAEA;">
+					<td class="list_title" valign="middle">
+						<span>微信</span>
+					</td>
+					<td>
+						<input id="user_wechat" maxlength="20" class="kbtn" style="width: 90%;" />
+					</td>
+				</tr>
+			</table>
+			<table style="width: 100%;">
+				<tr class="list">
+					<td class="list_title" valign="middle">
+						<span>手机</span>
+					</td>
+					<td style="color: #808080;">
+						<span id="user_phone"></span>
+					</td>
+				</tr>
+			</table>
+			<table style="margin-top: 20px;width: 100%;">
+				<tr class="list" style="border-top: 1px solid #EAEAEA;">
+					<td>
+						<span class="drift_word">参与兴趣漂</span>
+					</td>
+					<td class="list_show">
+						<div id="div1" class="open1">
+							<div id="div2" class="open2"></div>
+						</div>
+					</td>
+				</tr>
+
+			</table>
+			<div align="center">
+				<div id="set_user_sex" class="reveal_sex" align="center">
+					<h5 style="margin-top: 30px;">性别</h5>
+					<img id="boy" src="../icon/boy.png" style="width: 30%;margin-right: 8%;" />
+					<img id="girl" src="../icon/girl.png" style="width: 30%;margin-left: 8%;" />
+					<a class="close-reveal-modal">&#215;</a>
+				</div>
+				<div id="set_user_hobbys" class="reveal_hobbys">
+					</br>
+					<div class="hobbys_labels">
+						<p>游戏标签</p>
+						<img src="../icon/game0.png" id="game0" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/game1.png" id="game1" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/game2.png" id="game2" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/game3.png" id="game3" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/game4.png" id="game4" class="unclick" onclick="choose_hobbys(this.id)" />
+					</div>
+					<div class="hobbys_labels">
+						<p>宠物标签</p>
+						<img src="../icon/pet0.png" id="pet0" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/pet1.png" id="pet1" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/pet2.png" id="pet2" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/pet3.png" id="pet3" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/pet4.png" id="pet4" class="unclick" onclick="choose_hobbys(this.id)" />
+					</div>
+					<div class="hobbys_labels">
+						<p>电影标签</p>
+						<img src="../icon/movie0.png" id="movie0" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/movie1.png" id="movie1" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/movie2.png" id="movie2" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/movie3.png" id="movie3" class="unclick" onclick="choose_hobbys(this.id)" />
+						<img src="../icon/movie4.png" id="movie4" class="unclick" onclick="choose_hobbys(this.id)" />
+					</div>
+					<a class="close-reveal-modal">&#215;</a>
+					</br>
+					</br>
+				</div>
+			</div>
+			<div id="datePlugin"></div>
+			</br>
+		</div>
+
+		<div class="cutbox"></div>
+
+	</body>
+	<script type="text/javascript" src="../js/plupload.full.min.js"></script>
+	<script>
+		var b = JSON.parse(localStorage.getItem("users"));
+		var headimg_file;
+		var change_headimg = 0;
+		var is_save = 0;
+		var change_status = 0;
+		var photo_num;
+		var set_user_tryst_state = 0;
+		var set_user_headimgurl = b.user_headimgurl;
+		var set_user_headimg = b.user_headimgurl;
+		var set_user_sex = b.user_sex;
+		var set_user_phone = b.user_phone;
+		var set_user_hobby_game = b.user_hobby_game;
+		var set_user_hobby_pet = b.user_hobby_pet;
+		var set_user_hobby_movie = b.user_hobby_movie;
+		var files = new Blob();
+		var photos_file = new Array();
+		var width = $(window).width();
+		var height = $(window).height();
+		var timestamp = new Date().getTime();
+		var old_photo = new Array();
+		var img_width = new Array();
+		var img_height = new Array();
+		var pic = new Image();
+		var set_user_photos = ["0", "0", "0", "0"];
+		for(var i = 0; i < 4; i++) {
+			if(b.user_photos[i] != "0" && b.user_photos[i] != null) {
+				pic.src =b.user_photos[i] ;
+				img_width[i] = pic.width;
+				img_height[i] = pic.height;
+			}
+		}
+
+		$("#user_birth").css("width", width - 60 - 20 - 50 + "px");
+		$("#pic").css("height", width * 0.25 + "px");
+		$(".cutbox").css("display", "none");
+		$(".choose_div").css("display", "none");
+		$("#user_headimgurl").attr("src", set_user_headimg);
+		$("#set_user_headimgurl").attr("src", set_user_headimg);
+		if(set_user_hobby_game != "0" && set_user_hobby_game != null) {
+			set_hobbys(decompose(b.user_hobby_game));
+		} else {
+			set_user_hobby_game = "";
+		}
+		if(set_user_hobby_pet != "0" && set_user_hobby_pet != null) {
+			set_hobbys(decompose(b.user_hobby_pet));
+		} else {
+			set_user_hobby_pet = "";
+		}
+		if(set_user_hobby_movie != "0" && set_user_hobby_movie != null) {
+
+			set_hobbys(decompose(b.user_hobby_movie));
+
+		} else {
+			set_user_hobby_movie = "";
+		}
+
+		if(b.user_message == null) {
+			$("#user_message").val("未留下个性签名");
+		} else {
+			$("#user_message").val(b.user_message);
+		}
+		if(b.user_name == null) {
+			$("#user_name").val("未设置");
+		} else {
+			$("#user_name").val(b.user_name);
+		}
+		if(b.user_sex == 0 || b.user_sex == null) {
+			$("#user_sex").text("未设置");
+		} else if(b.user_sex == 1) {
+			$("#user_sex").text("男");
+			$("#boy").css("background-image", "linear-gradient(to top, #fff1eb 0%, #ace0f9 100%)");
+			$("#girl").css("background-image", "");
+		} else if(b.user_sex == 2) {
+			$("#user_sex").text("女");
+			$("#boy").css("background-image", "");
+			$("#girl").css("background-image", "linear-gradient(to top, #feada6 0%, #f5efef 100%)");
+		}
+		if(b.user_birth == "Invalid date") {
+			$("#user_birth").val("未设置");
+			$("#constellation").text("未设置");
+		}
+		if(b.user_birth != "Invalid date") {
+			$("#user_birth").val(b.user_birth);
+			setAstro(b.user_birth);
+		}
+		if(b.user_wechat == null || b.user_wechat == "") {
+			$("#user_wechat").val("未设置");
+		} else {
+			$("#user_wechat").val(b.user_wechat);
+		}
+		if(b.user_phone == null || b.user_phone == "" || b.user_phone == "0") {
+			$("#user_phone").text("未绑定");
+		} else {
+			$("#user_phone").text(b.user_phone);
+		}
+		for(var i = 0; i < b.user_photos.length; i++) {
+			if(b.user_photos[i] != "0"&&b.user_photos[i]!=null) {
+				old_photo[i] = b.user_photos[i];
+
+					if(img_width[i] >= img_height[i]) {
+						$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + b.user_photos[i] + "' style='float: left;margin-left: 2%;vertical-align: middle;height:100%' /></div>");
+						$("#no" + i).css("display", "block");
+						if(i == 3) {
+							$("#add_photo").css("display", "none");
+						}
+					} else {
+						$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + b.user_photos[i] + "' style='float: left;margin-left: 2%;vertical-align: middle;width:100%' /></div>");
+						$("#no" + i).css("display", "block");
+						if(i == 3) {
+							$("#add_photo").css("display", "none");
+						}
+					}
+
+			}
+		}
+
+		//设置生活照（四张）
+		function click_add() {
+			$("#fileElem").click();
+		};
+
+		//性别选择
+		$(function() {
+			$("#boy").bind("click", function() {
+				$("#user_sex").text("男");
+				$("#boy").css("background-image", "linear-gradient(to top, #fff1eb 0%, #ace0f9 100%)");
+				$("#girl").css("background-image", "");
+				set_user_sex = 1;
+				$(".close-reveal-modal").click();
+			})
+			$("#girl").bind("click", function() {
+				$("#user_sex").text("女");
+				$("#boy").css("background-image", "");
+				$("#girl").css("background-image", "linear-gradient(to top, #feada6 0%, #f5efef 100%)");
+				set_user_sex = 2;
+				$(".close-reveal-modal").click();
+			})
+		})
+
+		//开关特效
+		$(function() {
+			window.onload = function() {
+				if(b.user_tryst_state == 1) {
+					document.getElementById("div1").className = "open1";
+					document.getElementById("div2").className = "open2";
+				}
+				if(b.user_tryst_state == 0) {
+					document.getElementById("div1").className = "close1";
+					document.getElementById("div2").className = "close2";
+				}
+				var div2 = document.getElementById("div2");
+				var div1 = document.getElementById("div1");
+				div2.onclick = function() {
+					div1.className = (div1.className == "close1") ? "open1" : "close1";
+					div2.className = (div2.className == "close2") ? "open2" : "close2";
+					if(div1.className == "close1") {
+						set_user_tryst_state = 0;
+					}
+					if(div1.className != "close1") {
+						set_user_tryst_state = 1;
+					}
+				}
+			}
+		})
+		//生日选择器
+		$(function() {
+			$('#user_birth').date();
+		});
+		//设置获取图片的样式
+		$(function() {
+			$("#set_user_headimgurl").bind("click", function() {
+				$("#main").css("display", "none");
+				$(".cutbox").css("display", "block");
+				$(".choose_div").css("display", "block");
+			});
+		});
+		//本地获取图片裁剪,并上传
+		$(function() {
+			var w = $(window).width();
+			var h = $(window).height();
+			$('.cutbox').crop({
+				w: w > h ? h : w,
+				h: h,
+				r: (w - 30) * 0.5,
+				res: '',
+				callback: function(ret) {
+					$(".cutbox").css("display", "none");
+					$(".choose_div").css("display", "none");
+					$("#main").css("display", "block");
+					dealImage(ret, function(callback) {
+						$("#user_headimgurl").attr("src", callback);
+						headimg_file = dataURLtoBlob(callback);
+						change_headimg = 1;
+					});
+					localStorage.setItem("new_avatar", ret);
+					sessionStorage.setItem('edit_baby_avatar', true);
+
+				}
+			});
+		});
+		//修改完资料后点击保存
+		$("#save").bind("click", function() {
+			$("#main").css("pointer-events", "none");
+			$.DialogByZ.Loading('../icon/loading.png')
+			var set_user_name = $("#user_name").val();
+			var set_user_message = $("#user_message").val();
+			var set_user_sex = "";
+			var set_user_birth = $("#user_birth").val();
+			var set_user_wechat = $("#user_wechat").val();
+
+			if(set_user_hobby_game == "") {
+				set_user_hobby_game = "0"
+			}
+			if(set_user_hobby_pet == "") {
+				set_user_hobby_pet = "0"
+			}
+			if(set_user_hobby_movie == "") {
+				set_user_hobby_movie = "0"
+			}
+			if(set_user_wechat == null || set_user_wechat == "") {
+				set_user_wechat = "未设置";
+			}
+			if(set_user_phone == null || set_user_phone == "" || set_user_phone == "0") {
+				set_user_phone = 0;
+			}
+			if($("#user_sex").text() == "未设置") {
+				set_user_sex = 0;
+			}
+			if($("#user_sex").text() == "男") {
+				set_user_sex = 1;
+			}
+			if($("#user_sex").text() == "女") {
+				set_user_sex = 2;
+			}
+
+			for(var j = 0; j < photos.length; j++) {
+				dealImage(photos[j], function(dataurl) {
+					photos_file[j] = dataURLtoBlob(dataurl);
+				});
+			}
+			if(photos.length != 0) {
+
+				get_osssign(function(res) {
+					up_oss_num(res.policyBase64, res.signature, b.wx_openid + "/photo", 0, photos.length);
+				});
+			}
+
+			if(change_headimg == 1) {
+				get_osssign(function(res) {
+					up_oss(res.policyBase64, res.signature, b.wx_openid + "/headimgurl", headimg_file);
+
+				});
+			}
+			for(var v = 0; v < old_photo.length; v++){
+				set_user_photos[v] = old_photo[v];
+			}
+			for(var k = old_photo.length; k < photos.length+old_photo.length; k++) {
+				set_user_photos[k] = "http://godrift.oss-cn-shenzhen.aliyuncs.com/" + b.wx_openid + "/photo" +timestamp ;
+			}
+
+
+			$.ajax({
+				url: "http://www.xxxx.com/api/users/" + b.wx_openid,
+				contentType: "application/json",
+				type: 'put',
+				async: false,
+				data: JSON.stringify({
+					user_name: set_user_name,
+					user_sex: set_user_sex,
+					user_headimgurl: set_user_headimgurl,
+					user_birth: set_user_birth,
+					user_message: set_user_message,
+					user_tryst_state: set_user_tryst_state,
+					user_hobby_game: set_user_hobby_game,
+					user_hobby_pet: set_user_hobby_pet,
+					user_hobby_movie: set_user_hobby_movie,
+					user_wechat: set_user_wechat,
+					user_phone: set_user_phone,
+					user_photo1: set_user_photos[0],
+					user_photo2: set_user_photos[1],
+					user_photo3: set_user_photos[2],
+					user_photo4: set_user_photos[3],
+				}),
+
+				success: function(res) {
+					updata();
+					is_save = 1;
+				},
+				error: function(e) {
+					$.DialogByZ.Close();
+					$(".zbox-toast-container").css("bottom", height / 2 + "px");
+					$.DialogByZ.Autofade({
+						Content: "保存失败"
+					})
+				}
+			});
+		});
+
+		//照片处理
+		$(function() {
+			$("#fileElem").change(function() {
+				var files = $("#fileElem").prop('files');
+
+				var reader = new FileReader();
+				reader.readAsDataURL(files[0]);
+				reader.onload = function(evt) { //读取完文件之后会回来这里
+					var dataurl = evt.target.result;
+					var i = add_photos(dataurl) + old_photo.length;
+
+					imgLoad(dataurl, function(img_width, img_height) {
+
+						if(img_width >= img_height) {
+							$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + dataurl + "' style='float: left;margin-left: 2%;vertical-align: middle;height:100%' /></div>");
+							$("#no" + (i - 1)).css("display", "block");
+							if(i == 4) {
+								$("#add_photo").css("display", "none");
+							}
+						} else {
+							$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + dataurl + "' style='float: left;margin-left: 2%;vertical-align: middle;width:100%' /></div>");
+							$("#no" + (i - 1)).css("display", "block");
+							if(i == 4) {
+								$("#add_photo").css("display", "none");
+							}
+						}
+
+					});
+
+				}
+
+			})
+		})
+		//往数组添加照片
+		var photos = new Array();
+
+		function add_photos(file) {
+			return photos.push(file);
+		}
+		//从数组中删除照片
+		function order_photos(start) {
+			$("#add_photo").siblings().remove();
+			for(var j = 0; j < 4; j++) {
+				$("#no" + j).css("display", "none");
+			}
+
+			if(start > old_photo.length - 1) {
+				photos.splice(start, 1);
+			} else {
+				old_photo.splice(start, 1);
+			}
+			for(var i = 0; i < old_photo.length; i++) {
+				var pic1 = new Image();
+				pic1.src = old_photo[i];
+				img_width = pic1.width;
+				img_height = pic1.height;
+					if(img_width >= img_height) {
+						$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + old_photo[i] + "' style='float: left;margin-left: 2%;vertical-align: middle;height:100%' /></div>");
+						$("#no" + i).css("display", "block");
+						$("#add_photo").css("display", "block");
+
+					} else {
+						$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + old_photo[i] + "' style='float: left;margin-left: 2%;vertical-align: middle;width:100%' /></div>");
+						$("#no" + i).css("display", "block");
+
+						$("#add_photo").css("display", "block");
+
+					}
+
+			}
+
+			for(var j = old_photo.length; j < photos.length; i++) {
+				
+				var pic2 = new Image();
+				pic2.src = photos[j];
+				img_width = pic2.width;
+				img_height = pic2.height;
+					if(img_width >= img_height) {
+						$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + photos[j] + "' style='float: left;margin-left: 2%;vertical-align: middle;height:100%' /></div>");
+						$("#no" + i).css("display", "block");
+						$("#add_photo").css("display", "block");
+
+					} else {
+						$("#add_photo").before("<div style='float: left;overflow: hidden;width: 25%;height: " + width * 0.25 + "px;'><img src='" + photos[j] + "' style='float: left;margin-left: 2%;vertical-align: middle;width:100%' /></div>");
+						$("#no" + i).css("display", "block");
+
+						$("#add_photo").css("display", "block");
+
+					}
+
+			}
+
+		}
+
+		//查看图片的宽高
+		function imgLoad(url, callback) {
+			var img = new Image();
+			img.src = url;
+			if(img.complete) {
+				callback(img.width, img.height);
+			} else {
+				img.onload = function() {
+					callback(img.width, img.height);
+					img.onload = null;
+				};
+			};
+		};
+		//分解hobbys
+		function decompose(hobbys) {
+			var hobby = new Array();
+			hobby = hobbys.split("/");
+			return hobby;
+		}
+		//设置数据库里的hobby数据
+		function set_hobbys(user_hobby) {
+			for(var i = 0; i < user_hobby.length; i++) {
+				$("#" + user_hobby[i]).attr("class", "click");
+			}
+		}
+		//点击hobbys后的操作
+		function choose_hobbys(id) {
+			if($("#" + id).attr("class") == "unclick") {
+				if(id.substring(0, id.length - 1) == "game") {
+					set_user_hobby_game += id + "/";
+				}
+				if(id.substring(0, id.length - 1) == "pet") {
+					set_user_hobby_pet += id + "/";
+				}
+				if(id.substring(0, id.length - 1) == "movie") {
+					set_user_hobby_movie += id + "/";
+				}
+				$("#" + id).attr("class", "click");
+			} else {
+				if(id.substring(0, id.length - 1) == "game") {
+					set_user_hobby_game = set_user_hobby_game.replace(id + "/", "");
+				}
+				if(id.substring(0, id.length - 1) == "pet") {
+					set_user_hobby_pet = set_user_hobby_pet.replace(id + "/", "");
+				}
+				if(id.substring(0, id.length - 1) == "movie") {
+					set_user_hobby_movie = set_user_hobby_movie.replace(id + "/", "");
+				}
+				$("#" + id).attr("class", "unclick");
+			}
+		};
+		//图片压缩（用canvas将base64画出来，压缩之后再转换回base64）
+		function dealImage(path, callback) {
+			var img = new Image();
+			img.src = path;
+			img.onload = function() {
+				//默认按比例压缩    
+				var w = this.width,
+					h = this.height;
+
+				var quality = 0.8; // 默认图片质量为0.7    
+
+				//生成canvas    
+				var canvas = document.createElement('canvas');
+				var ctx = canvas.getContext('2d');
+
+				// 创建属性节点    
+				canvas.setAttribute("width", w);
+				canvas.setAttribute("height", h);
+
+				ctx.drawImage(this, 0, 0, w, h);
+				// quality值越小，所绘制出的图像越模糊    
+				var base64 = canvas.toDataURL('image/jpeg', quality);
+				// 回调函数返回base64的值    
+				callback(base64);
+			};
+		};
+		//DataURL转Blob(file也是blob)
+		function dataURLtoBlob(dataurl) {
+			var arr = dataurl.split(','),
+				mime = arr[0].match(/:(.*?);/)[1],
+				bstr = atob(arr[1]),
+				n = bstr.length,
+				u8arr = new Uint8Array(n);
+			while(n--) {
+				u8arr[n] = bstr.charCodeAt(n);
+			}
+			return new Blob([u8arr], {
+				type: mime
+			});
+		}
+		//向后台获取oss签名,callback整个返回值，返回值包括policyBase64、signature
+		function get_osssign(callback) {
+			var osssign;
+			$.ajax({
+				type: "get",
+				contentType: "application/json",
+				url: "http://www.xxxx.com/api/osssign",
+				async: false,
+				success: function(res) {
+					callback(res);
+				},
+			});
+			return osssign;
+		}
+		//上传图片至oss
+		function up_oss(policyBase64, signature, file_oss_name, file) {
+			//组装发送数据
+			var request = new FormData();
+			request.append("OSSAccessKeyId", "LTAIAdAlP8qf8Lv3"); //Bucket 拥有者的Access Key Id。
+			request.append("policy", policyBase64); //policy规定了请求的表单域的合法性
+			request.append("Signature", signature); //根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+			//---以上都是阿里的认证策略 
+			request.append("key", file_oss_name); //文件名字，可设置路径
+			request.append("success_action_status", '200'); // 让服务端返回200,不然，默认会返回204
+			request.append('file', file); //需要上传的文件 file  
+
+			$.ajax({
+				url: "http://godrift.oss-cn-shenzhen.aliyuncs.com", //上传阿里地址
+
+				data: request,
+				processData: false, //默认true，设置为 false，不需要进行序列化处理
+				cache: false, //设置为false将不会从浏览器缓存中加载请求信息
+				async: false, //发送同步请求
+				contentType: false, //避免服务器不能正常解析文件---------具体的可以查下这些参数的含义
+				type: 'post',
+				success: function(res) {
+					set_user_headimgurl = "http://godrift.oss-cn-shenzhen.aliyuncs.com/" + b.wx_openid + "/headimgurl";
+
+				},
+				error: function(e) {
+
+					console.log(e);
+				}
+			});
+		}
+		//上传多张至oss
+		function up_oss_num(policyBase64, signature, file_oss_name, num, long) {
+			//组装发送数据
+			num = parseInt(num);
+			dealImage(photos[num], function(dataurl) {
+
+				var request = new FormData();
+				file = dataURLtoBlob(dataurl);
+				request.append("OSSAccessKeyId", "LTAIAdAlP8qf8Lv3"); //Bucket 拥有者的Access Key Id。
+				request.append("policy", policyBase64); //policy规定了请求的表单域的合法性
+				request.append("Signature", signature); //根据Access Key Secret和policy计算的签名信息，OSS验证该签名信息从而验证该Post请求的合法性
+				//---以上都是阿里的认证策略 
+				request.append("key", file_oss_name + timestamp); //文件名字，可设置路径
+				request.append("success_action_status", '200'); // 让服务端返回200,不然，默认会返回204
+				request.append('file', file); //需要上传的文件 file
+				$.ajax({
+					url: "http://godrift.oss-cn-shenzhen.aliyuncs.com", //上传阿里地址
+
+					data: request,
+					processData: false, //默认true，设置为 false，不需要进行序列化处理
+					cache: false, //设置为false将不会从浏览器缓存中加载请求信息
+					async: false, //发送同步请求
+					contentType: false, //避免服务器不能正常解析文件---------具体的可以查下这些参数的含义
+					type: 'post',
+					success: function(res) {
+						if(long > num + 1) {
+							up_oss_num(policyBase64, signature, file_oss_name, num + 1, long);
+						}
+					},
+					error: function(e) {
+
+						console.log(e);
+					}
+				});
+			});
+
+		}
+		//未选择图片返回
+		function cancel() {
+			$(".cutbox").css("display", "none");
+			$(".choose_div").css("display", "none");
+			$("#main").css("display", "block");
+		}
+		//返回
+		function reback() {
+			if(is_save == 0) {
+				$.DialogByZ.Confirm({
+					Title: "",
+					Content: "您所编辑的资料将不保存</br>是否退出",
+					FunL: confirmL,
+					FunR: Immediate
+				});
+			} else {
+				window.location.href = "javascript:history.back(-1);";
+			}
+		}
+		//确定返回上一页面
+		function confirmL() {
+			window.location.href = "javascript:history.back(-1);";
+		}
+		//取消返回
+		function Immediate() {
+			$.DialogByZ.Close();
+		}
+		//设置星座
+		function setAstro(user_date) {
+			var month = user_date.split("-")[1];
+			var day = user_date.split("-")[2];
+			var constellation = getAstro(month, day);
+			$("#constellation").text(constellation + "座");
+		}
+		//计算星座
+		function getAstro(month, day) {
+			var s = "魔羯水瓶双鱼牡羊金牛双子巨蟹狮子处女天秤天蝎射手魔羯";
+			var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22];
+			return s.substr(month * 2 - (day < arr[month - 1] ? 2 : 0), 2);
+		}
+		//重新获取数据，更新本地缓存
+		function updata() {
+			var url = "http://www.xxxx.com/api/users/" + b.wx_openid;
+			$.ajax({
+				type: "get",
+				url: url,
+				beforeSend: function(xmlHttp) {
+					xmlHttp.setRequestHeader("If-Modified-Since", "0");
+					xmlHttp.setRequestHeader("Cache-Control", "no-cache");
+				},
+				success: function(res) {
+					localStorage.removeItem("users");
+					localStorage.setItem("users", JSON.stringify(res));
+					sessionStorage.setItem("save", "1");
+					$("#main").css("pointer-events", "auto");
+					$.DialogByZ.Close();
+					alert("保存成功")
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		};
+	</script>
+
+</html>

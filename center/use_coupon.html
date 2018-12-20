@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+		<title>漂茶券</title>
+		<style>
+			body,
+			html {
+				padding: 0;
+				margin: 0;
+				font-size: 20px;
+			}
+			
+			a {
+				text-decoration: none;
+				color: black;
+			}
+			
+			p {
+				margin-left: 20px;
+				height: 30px;
+				line-height: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<table style="margin-top: -60px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+				<td style="width: 1px;float: left;">
+				</td>
+				<td align="center">
+					<img src="../icon/coupon.png" style="height: 35px;margin-top: 5px;" />
+				</td>
+				<td style="width: 1px;float: right;">
+				</td>
+			</table>
+			<div align="center" style="margin-top: 60px;" id="coupon_list">
+				<!--<div align="center" style="overflow: hidden;width: 100%;margin-top: 10px;">
+					<img src="../icon/7.png" id="123" onclick="click_coupon(this.id)" style="width: 80%;" />
+					<img src="../icon/yes.png" id="yes123" onclick="use_coupon(this.id)" style="width: 10%;display: none;" />
+					<img src="../icon/no.png" id="no123" onclick="cancle(this.id)" style="width: 10%;display: none;" />
+				</div>-->
+			</div>
+
+		</div>
+		</br>
+	</body>
+	<script src="../js/get.js"></script>
+	<script>
+		var shopid = GetRequest(1);
+		var openid = GetRequest(2);
+		var width = $(window).width();
+		var choose = "0";
+		var num = 0;
+		var ip = returnCitySN.cip;
+		var teaid;
+
+		setInterval(function() {
+			get_coupons(num);
+
+		}, 1000)
+
+		function get_coupons(offset) {
+			$.ajax({
+				type: "get",
+				url: "http://www.xxxx.com/api/coupons/" + openid + "?offset=" + offset,
+				async: true,
+				success: function(res) {
+					num += res.length;
+					for(var i = 0; i < res.length; i++) {
+						teaid = res[i].teaid;
+						if(res[i].type == 1) {
+							//div内部前方加入（好友券）
+							div1 = "<div align='center' style='overflow: hidden;width: 100%;margin-top: 10px;' >";
+							img1 = "<img src='../icon/7.png' id='" + res[i].id + "' onclick='click_coupon(this.id)' style='width: 80%;' />";
+							img2 = "<img src='../icon/yes.png' id='yes" + res[i].id + "' onclick='use_coupon(this.id,0)' style='width: 10%;display: none;'/>";
+							img3 = "<img src='../icon/no.png' id='no" + res[i].id + "' onclick='cancle(this.id)' style='width: 10%;display: none;'/>"
+							div2 = "</div>";
+							$("#coupon_list").prepend(div1 + img1 + img2 + img3 + div2);
+						}
+						if(res[i].type == 0) {
+							//div内部后方加入（漂茶券）
+							div1 = "<div align='center' style='overflow: hidden;width: 100%;margin-top: 10px;' >";
+							img1 = "<img src='../icon/15.png' id='" + res[i].id + "' onclick='click_coupon(this.id)' style='width: 80%;' />";
+							img2 = "<img src='../icon/yes.png' id='yes" + res[i].id + "' onclick='use_coupon(this.id,1)' style='width: 10%;display: none;'/>";
+							img3 = "<img src='../icon/no.png' id='no" + res[i].id + "' onclick='cancle(this.id)' style='width: 10%;display: none;'/>"
+							div2 = "</div>";
+							$("#coupon_list").append(div1 + img1 + img2 + img3 + div2);
+						}
+					}
+				},
+				error: function(e) {
+
+				}
+			});
+		}
+
+		function click_coupon(id) {
+
+			if(choose != "0") {
+				console.log(choose)
+				cancle(choose);
+				choose = "0";
+			} else {
+				$("#" + id).css("margin-left", "-10%");
+				$("#" + id).css("float", "left");
+				$("#yes" + id).css("display", "block");
+				$("#no" + id).css("display", "block");
+				$("#no" + id).css("margin-top", width * 0.15 + "px");
+				choose = "no" + id;
+			}
+
+		}
+
+		function use_coupon(id, type) {
+			id = id.substring(3, id.length);
+			$("#" + id).css("margin-left", "10%");
+			$("#yes" + id).css("display", "none");
+			$("#no" + id).css("display", "none");
+			$("#no" + id).css("margin-top", width * 0.15 + "px");
+			if(teaid == null) {
+				teaid = "null"
+			}
+			location.href = "../pay/pay_coupon.html?couponid=" + id + "&shopid=" + shopid + "&teaid=" + teaid + "&type=" + type;
+		}
+
+		function cancle(id) {
+			id = id.substring(2, id.length);
+			$("#" + id).css("margin-left", "10%");
+			$("#yes" + id).css("display", "none");
+			$("#no" + id).css("display", "none");
+
+		}
+	</script>
+
+</html>

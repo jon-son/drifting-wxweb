@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title>绑定手机</title>
+		<link rel="stylesheet" type="text/css" href="../css/weui.min.css">
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	</head>
+
+	<body>
+		<table style="margin-top: -70px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 1px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/binding.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 1px;float: right;">
+			</td>
+		</table>
+		<form style="margin:8px;margin-top: 70px;" action="#" method="post">
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<lab el class="weui_label">手机号</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input class="weui_input" type="tel" id="tell" name="tell" placeholder="输入手机号">
+				</div>
+			</div>
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">验证码</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input class="weui_input" type="certifycode" id="certifycode" name="certifycode" placeholder="输入验证码">
+				</div>
+				<div class="weui_cell_ft">
+					<input style="width:80px; font-size: 12px;b" type="button" class="weui_btn weui_btn weui_btn_mini weui_btn_primary" value="获取验证码" onclick="clickButton(this)"> </div>
+			</div>
+			<div class="weui_cell"></div>
+			<div class="weui_btn_area" style="margin-top:80px;">
+				<a class="weui_btn weui_btn_primary" type="submit" onclick="binding()">绑定手机</a>
+			</div>
+		</form>
+		</br>
+
+	</body>
+
+	<script type="text/javascript">
+		var mine = JSON.parse(localStorage.getItem("users"));
+		console.log(mine.user_phone)
+		if(mine.user_phone!=0&&mine.user_phone!=null){
+			$("#tell").attr("placeholder",mine.user_phone);
+		}
+
+		function clickButton(obj) {
+			var phone = $("#tell").val();
+			if(phone == "") {
+				alert("请输入绑定的手机号");
+				return;
+			} else if(phone.length != 11) {
+				alert("请输入正确的手机号");
+				return;
+			}
+			var obj = $(obj);
+			$.ajax({
+				url: "http://www.xxxx.com/api/uservalicode?openid=" + mine.wx_openid + "&phone=" + phone,
+				contentType: "application/json",
+				type: "post",
+				async: false,
+				success: function(res) {
+					console.log(res)
+					
+					if(res.errcode == 0) {
+						alert("验证码已发送，请注意查收");
+						obj.attr("disabled", "disabled"); /*按钮倒计时*/
+						var time = 60;
+						var set = setInterval(function() {
+							obj.val(--time + "(s)");
+						}, 1000); /*等待时间*/
+						setTimeout(function() {
+							obj.attr("disabled", false).val("重新获取验"); /*倒计时*/
+							clearInterval(set);
+						}, 60000);
+					} else {
+						alert("今天验证码获取次数上限");
+					}
+
+				},
+				error: function(e) {
+					alert("请重新获取验证码");
+				}
+
+			});
+
+		}
+
+		function binding() {
+			var certifycode = $("#certifycode").val();
+			var certifyphone = $("#tell").val();
+			if(certifycode == "") {
+				alert("请输入验证码");
+				return;
+			} else if(certifycode.length != 6) {
+				alert("请输入6位正确的验证码");
+				return;
+			}
+			$.ajax({
+				url: "http://www.xxxx.com/api/uservalidate?openid=" + mine.wx_openid + "&phone=" + certifyphone + "&code=" + certifycode,
+				type: "get",
+				async: false,
+				success: function(res) {
+					if(res.status == 1) {
+						updata();
+					} else {
+						alert("验证码错误");
+					}
+				},
+				error: function(e) {
+					alert("绑定失败");
+				}
+			});
+		}
+		function updata() {
+			var url = "http://www.xxxx.com/api/users/" + mine.wx_openid;
+			$.ajax({
+				type: "get",
+				url: url,
+				async: false,
+				success: function(res) {
+					localStorage.removeItem("users");
+					localStorage.setItem("users", JSON.stringify(res));
+					alert("绑定成功");
+				},
+				error: function(e) {
+					alert("更新资料失败，请刷新")
+					console.log(e);
+				}
+			});
+		}
+	</script>
+
+</html>

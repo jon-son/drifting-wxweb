@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<title>漂茶券</title>
+		<style>
+			body,
+			html {
+				padding: 0;
+				margin: 0;
+				font-size: 20px;
+			}
+			
+			a {
+				text-decoration: none;
+				color: black;
+			}
+			
+			p {
+				margin-left: 20px;
+				height: 30px;
+				line-height: 30px;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<table style="margin-top: -70px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+				<td style="width: 1px;float: left;">
+					<a href="javascript:history.back(-1);" style="color: white;">
+						<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+					</a>
+				</td>
+				<td align="center">
+					<img src="../icon/coupon.png" style="height: 35px;margin-top: 5px;" />
+				</td>
+				<td style="width: 1px;float: right;">
+				</td>
+			</table>
+			<div align="center" style="margin-top: 70px;">
+				<div align="center" style="overflow: hidden;width: 100%;margin-top: 10px;" id="coupon_list">
+					<!--<img src="../icon/7.png" id="123" onclick="use_coupon(this.id)" style="width: 80%;" />
+					<img src="../icon/yes.png" id="yes" style="width: 5%;display: none;"/>
+					<img src="../icon/no.png" id="no" style="width: 5%;display: none;"/>-->
+				</div>
+			</div>
+
+		</div>
+		</br>
+	</body>
+	<script>
+		var mine = JSON.parse(localStorage.getItem("users"));
+		var num = 0;
+		var count = 0;
+		get_coupons(num);
+		$(window).scroll(function() {
+					var h = $(window).height() * 0.98; //浏览器窗口的高度
+					var y = $(window).scrollTop(); //滚动条位置
+					if(y - h >= 0) { //滚动条位置-窗口高度>=0表示已经置底了
+						if(count==0){
+							get_coupons(num);
+						}
+					}
+			})
+		
+		function get_coupons(offset){
+			$.ajax({
+				type:"get",
+				url:"http://www.xxxx.com/api/coupons/"+mine.wx_openid+"?offset="+offset,
+				async:true,
+				success: function(res) {
+					num+=res.length;
+					if(res.length<10){
+						count =1;
+					}
+					for(var i = 0; i < res.length; i++) {
+						if(res[i].type==1){
+							//div内部前方加入（好友券）
+							$("#coupon_list").prepend("<img src='../icon/7.png' id='" + res[i].id + "'  style='width: 80%;margin-top: 10px;' />");
+						}
+						if(res[i].type==0){
+							//div内部后方加入（漂茶券）
+							$("#coupon_list").append("<img src='../icon/15.png' id='" + res[i].id + "'  style='width: 80%;margin-top: 10px;' />");
+						}
+					}
+				},
+				error: function(e) {
+
+				}
+			});
+		}
+
+	</script>
+	
+
+</html>

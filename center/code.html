@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<title>邀请好友</title>
+	</head>
+	<style>
+		body,
+		html {
+			padding: 0;
+			margin: 0;
+			font-size: 20px;
+		}
+		
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		
+		p {
+			height: 30px;
+			line-height: 30px;
+		}
+		
+		.code {
+			width: 80%;
+			height: 300px;
+			margin-top: 120px;
+			margin-left: 10%;
+			background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+			border-radius: 10px;
+			color: white;
+		}
+	</style>
+
+	<body>
+		<table style="margin-top: -120px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 1px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/invite.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 1px;float: right;">
+			</td>
+		</table>
+		<div class="code" align="center">
+			</br><span style="font-size: 30px;">邀请码</span></br>
+			<img id="code" style="height: 50%;margin-top: 10px;">
+			</br><span style="font-size: 15px;">邀请好友参与去漂流</span></br>
+			<span style="font-size: 15px;">即可获得邀请礼券</span>
+		</div>
+
+		</br>
+	</body>
+	<script>
+		var b = JSON.parse(localStorage.getItem("users"));	
+		var url ="http://www.xxxx.com/invitation.html?invitationcode="+b.user_invitation_code;
+		$("#code").attr("src",'http://qr.liantu.com/api.php?&w=200&m=5&text='+url)
+
+		$(function() {
+			$.ajax({
+				type: "get",
+				url: "http://www.xxxx.com/api/signature",
+				async: true,
+				success: function(data) {
+		
+					wx.config({
+						debug: false,
+						appId: 'xxxxxxxxxxxxxxxx',
+						timestamp: data.timestamp,
+						nonceStr: data.noncestr,
+						signature: data.signature,
+						jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareQZone']
+					});
+					wx.ready(function() {
+						wx.onMenuShareAppMessage({
+							title: '去漂流邀请码',
+							desc: '扫描二维码，获取好友礼券',
+							link: 'www.xxxx.com/center/share.html?user_invitation_code='+b.user_invitation_code,
+							imgUrl: 'http://www.xxxx.com/icon/code.png'
+						});
+
+						wx.onMenuShareTimeline({
+							title: '去漂流邀请码',
+							link: 'www.xxxx.com/center/share.html?user_invitation_code='+b.user_invitation_code,
+							imgUrl: 'http://www.xxxx.com/icon/code.png'
+						});
+						wx.onMenuShareQQ({
+							title: '去漂流邀请码',
+							desc: '扫描二维码，获取好友礼券',
+							link: 'www.xxxx.com/center/share.html?user_invitation_code='+b.user_invitation_code,
+							imgUrl: 'http://www.xxxx.com/icon/code.png'
+						});
+						wx.onMenuShareQZone({
+							title: '去漂流邀请码',
+							desc: '扫描二维码，获取好友礼券',
+							link: 'www.xxxx.com/center/share.html?user_invitation_code='+b.user_invitation_code,
+							imgUrl: 'http://www.xxxx.com/icon/code.png'
+						});
+
+					})
+				},
+				error: function(e) {
+					console.log(e);
+				}
+
+			});
+			
+			$("#wf").bind("click",function(){
+				wx.onMenuShareTimeline({
+							title: '去漂流邀请码',
+							link: 'www.xxxx.com/center/code.html',
+							imgUrl: 'http://wx.qlogo.cn/mmopen/Q3auHgzwzM6AmYj8AmVePf8Tm99ZaA25JoxNXJkxQTiaPEl2rxlwZnFyichlLkJ9mLQKgic8RIlEIOemP7oEFDBww/132'
+						});
+			})
+			$("#qq").bind("click",function(){
+				wx.onMenuShareQQ({
+							title: '去漂流邀请码',
+							desc: '扫描二维码，获取好友礼券',
+							link: 'www.xxxx.com/center/code.html',
+							imgUrl: 'http://wx.qlogo.cn/mmopen/Q3auHgzwzM6AmYj8AmVePf8Tm99ZaA25JoxNXJkxQTiaPEl2rxlwZnFyichlLkJ9mLQKgic8RIlEIOemP7oEFDBww/132'
+						});
+			})
+			$("#qz").bind("click",function(){
+				wx.onMenuShareQZone({
+							title: '去漂流邀请码',
+							desc: '扫描二维码，获取好友礼券',
+							link: 'www.xxxx.com/center/code.html',
+							imgUrl: 'http://wx.qlogo.cn/mmopen/Q3auHgzwzM6AmYj8AmVePf8Tm99ZaA25JoxNXJkxQTiaPEl2rxlwZnFyichlLkJ9mLQKgic8RIlEIOemP7oEFDBww/132'
+						});
+			})
+		});
+		function share_wc(){
+			alert("123");
+				wx.ready(function() {
+				wx.onMenuShareAppMessage({
+							title: '去漂流邀请码',
+							desc: '扫描二维码，获取好友礼券',
+							link: 'www.xxxx.com/center/code.html',
+							imgUrl: 'http://wx.qlogo.cn/mmopen/Q3auHgzwzM6AmYj8AmVePf8Tm99ZaA25JoxNXJkxQTiaPEl2rxlwZnFyichlLkJ9mLQKgic8RIlEIOemP7oEFDBww/132'
+						});
+				});
+		
+		}
+		
+	</script>
+
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+
+		<title>反馈</title>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<style>
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				font-family: 微软雅黑;
+			}
+			
+			button {
+				outline: none;
+			}
+			
+			p {
+				width: 90%;
+				color: #808080;
+				font-size: 12px;
+				margin-top: 10px;
+			}
+			
+			#title {
+				width: 90%;
+				border-radius: 5px;
+				height: 25px;
+				border: 1px solid #EAEAEA;
+			}
+			
+			#content {
+				width: 90%;
+				margin-top: 10px;
+				border-radius: 5px;
+				height: 100px;
+				border: 1px solid #EAEAEA;
+			}
+			
+			#req {
+				width: 90%;
+				margin-top: 10px;
+				border-radius: 5px;
+				height: 100px;
+				border: 1px solid #EAEAEA;
+			}
+			
+			#req_title {
+				width: 90%;
+				margin-top: 10px;
+				border-radius: 5px;
+				height: 25px;
+				border: 1px solid #EAEAEA;
+			}
+			
+			#req_text {
+				width: 90%;
+				margin-top: 10px;
+				border-radius: 5px;
+				height: 100px;
+				border: 1px solid #EAEAEA;
+			}
+			
+			#button {
+				color: white;
+				background-color: #64b3f4;
+				margin-top: 20px;
+				width: 90%;
+				border-radius: 5px;
+				border: 1px solid #EAEAEA;
+				height: 40px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<table style="margin-top: -70px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 1px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/feedback.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 1px;float: right;">
+			</td>
+		</table>
+		<p style="margin-left: 5%;margin-top: 70px;">您有什么问题或者建议想对我们说？</p>
+		<div align="center">
+
+			<input id="title" value="" maxlength="20" type="text" placeholder=" 您的主题：" />
+			<textarea id="content" value="" maxlength="100" placeholder="您的宝贵意见，就是我们进步的源泉"></textarea>
+			<button id="button" type="button" onclick="submit()">提交反馈</button>
+		</div>
+		<div id="req_div" style="margin-left: 5%;width: 100%;display: none;">
+			<p>问题:</p>
+			<p id="req_title"></p>
+			<p>问题内容:</p>
+			<p id="req_text"></p>
+			<p>客服回复:</p>
+			<p>回复时间:<span id="req_time">123321</span></p>
+			<p id="req"></p>
+		</div>
+		<p style="margin-left: 5%;">(*^▽^*)请详细描述您遇到的问题，有助于我们快速定位并解决问题，或留下您宝贵的建议或意见，我们会认真进行评估！</p>
+		</br>
+	</body>
+	<script>
+		var mine = JSON.parse(localStorage.getItem("users"));
+
+		//button点击后高亮
+		window.onload = function() {
+			var friend = document.getElementById("button");
+			// 触摸
+			friend.ontouchstart = function() {
+				// 背景变绿
+				this.style.backgroundColor = "#209cff";
+			};
+			// 停止触摸
+			friend.ontouchend = function() {
+				// 还原白色
+				this.style.backgroundColor = "#64b3f4";
+			};
+		};
+		$(function() {
+			$.ajax({
+				url: "http://www.xxxx.com/api/remarks/" + mine.wx_openid + "?type=new",
+				type: "get",
+				success: function(res) {
+					for(var i =0;i<res.length;i++){
+						if(res[i].state == 1) {
+						$("#req_div").css("display", "block");
+						$("#req_title").text(res[i].title);
+						$("#req_text").text(res[i].text);
+						$("#req").text(res[i].res);
+						var time = time_change(res[i].req_date);
+						$("#req_time").text(time);
+
+					}
+					}
+					
+				},
+				error: function(e) {
+					console.log(e)
+				}
+			})
+		})
+
+		//button提交事件
+		function submit() {
+			var title1 = $("#title").val();
+			var content1 = $("#content").val();
+			$.ajax({
+				type: "post",
+				url: "http://www.xxxx.com/api/remarks?id=" + mine.wx_openid,
+				async: true,
+				contentType: "application/json",
+				data: JSON.stringify({
+					title: title1,
+					text: content1
+				}),
+				success: function(res) {
+					alert("成功提交反馈")
+				},
+				error: function(res) {
+					alert("提交反馈失败")
+				}
+			});
+		}
+
+		function time_change(time) {
+			var date = new Date(time);
+			var seperator1 = "-";
+			var seperator2 = ":";
+			var month = date.getMonth() + 1;
+			var strDate = date.getDate();
+			if(month >= 1 && month <= 9) {
+				month = "0" + month;
+			}
+			if(strDate >= 0 && strDate <= 9) {
+				strDate = "0" + strDate;
+			}
+			var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate +
+				" " + date.getHours() + seperator2 + date.getMinutes() +
+				seperator2 + date.getSeconds();
+			return currentdate;
+		}
+	</script>
+
+</html>
