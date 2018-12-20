@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title></title>
+		<link href="../css/zzsc.css" rel="stylesheet" type="text/css">
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<style>
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				font-family: 微软雅黑;
+			}
+			
+			h3 {
+				text-align: center;
+				color: #555;
+			}
+			
+			.hobby {
+				width: 90%;
+				height: 150px;
+				box-shadow: 0 .1px 20px #EAEAEA;
+				background-color: white;
+				border-radius: 5px;
+			}
+			
+			.hobby_dirft_null {
+				height: 110px;
+			}
+			
+			.hobby_dirft img {
+				height: 35px;
+				margin-top: 5px;
+				float: right;
+				margin-right: 3%;
+			}
+			/*<-------游戏漂方块------>*/
+			
+			.container {
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				justify-content: center;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-orient: horizontal;
+				-webkit-box-direction: normal;
+				-ms-flex-direction: row;
+				flex-direction: row;
+				margin: 0 auto;
+			}
+			
+			@-webkit-keyframes rotate {
+				0% {
+					-webkit-transform: rotateX(-37.5deg) rotateY(45deg);
+					transform: rotateX(-37.5deg) rotateY(45deg);
+				}
+				50% {
+					-webkit-transform: rotateX(-37.5deg) rotateY(405deg);
+					transform: rotateX(-37.5deg) rotateY(405deg);
+				}
+				100% {
+					-webkit-transform: rotateX(-37.5deg) rotateY(405deg);
+					transform: rotateX(-37.5deg) rotateY(405deg);
+				}
+			}
+			
+			@keyframes rotate {
+				0% {
+					-webkit-transform: rotateX(-37.5deg) rotateY(45deg);
+					transform: rotateX(-37.5deg) rotateY(45deg);
+				}
+				50% {
+					-webkit-transform: rotateX(-37.5deg) rotateY(405deg);
+					transform: rotateX(-37.5deg) rotateY(405deg);
+				}
+				100% {
+					-webkit-transform: rotateX(-37.5deg) rotateY(405deg);
+					transform: rotateX(-37.5deg) rotateY(405deg);
+				}
+			}
+			
+			.cube,
+			.cube * {
+				position: absolute;
+				width: 80px;
+				height: 80px;
+			}
+			
+			.sides {
+				-webkit-animation: rotate 3s ease infinite;
+				animation: rotate 3s ease infinite;
+				-webkit-animation-delay: .8s;
+				animation-delay: .8s;
+				-webkit-transform-style: preserve-3d;
+				transform-style: preserve-3d;
+				-webkit-transform: rotateX(-37.5deg) rotateY(45deg);
+				transform: rotateX(-37.5deg) rotateY(45deg);
+			}
+			
+			.cube .sides * {
+				box-sizing: border-box;
+				background-color: rgba(242, 119, 119, 0.5);
+				border: 15px solid white;
+			}
+			
+			.cube .sides .top {
+				-webkit-animation: top-animation 3s ease infinite;
+				animation: top-animation 3s ease infinite;
+				-webkit-animation-delay: 0ms;
+				animation-delay: 0ms;
+				-webkit-transform: rotateX(90deg) translateZ(40px);
+				transform: rotateX(90deg) translateZ(40px);
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-transform-origin: 50% 50%;
+				transform-origin: 50% 50%;
+			}
+			
+			@-webkit-keyframes top-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(40px);
+					transform: rotateX(90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(55px);
+					transform: rotateX(90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(55px);
+					transform: rotateX(90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(40px);
+					transform: rotateX(90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(40px);
+					transform: rotateX(90deg) translateZ(40px);
+				}
+			}
+			
+			@keyframes top-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(40px);
+					transform: rotateX(90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(55px);
+					transform: rotateX(90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(55px);
+					transform: rotateX(90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(40px);
+					transform: rotateX(90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateX(90deg) translateZ(40px);
+					transform: rotateX(90deg) translateZ(40px);
+				}
+			}
+			
+			.cube .sides .bottom {
+				-webkit-animation: bottom-animation 3s ease infinite;
+				animation: bottom-animation 3s ease infinite;
+				-webkit-animation-delay: 0ms;
+				animation-delay: 0ms;
+				-webkit-transform: rotateX(-90deg) translateZ(40px);
+				transform: rotateX(-90deg) translateZ(40px);
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-transform-origin: 50% 50%;
+				transform-origin: 50% 50%;
+			}
+			
+			@-webkit-keyframes bottom-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(40px);
+					transform: rotateX(-90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(55px);
+					transform: rotateX(-90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(55px);
+					transform: rotateX(-90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(40px);
+					transform: rotateX(-90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(40px);
+					transform: rotateX(-90deg) translateZ(40px);
+				}
+			}
+			
+			@keyframes bottom-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(40px);
+					transform: rotateX(-90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(55px);
+					transform: rotateX(-90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(55px);
+					transform: rotateX(-90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(40px);
+					transform: rotateX(-90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateX(-90deg) translateZ(40px);
+					transform: rotateX(-90deg) translateZ(40px);
+				}
+			}
+			
+			.cube .sides .front {
+				-webkit-animation: front-animation 3s ease infinite;
+				animation: front-animation 3s ease infinite;
+				-webkit-animation-delay: 100ms;
+				animation-delay: 100ms;
+				-webkit-transform: rotateY(0deg) translateZ(40px);
+				transform: rotateY(0deg) translateZ(40px);
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-transform-origin: 50% 50%;
+				transform-origin: 50% 50%;
+			}
+			
+			@-webkit-keyframes front-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(40px);
+					transform: rotateY(0deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(55px);
+					transform: rotateY(0deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(55px);
+					transform: rotateY(0deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(40px);
+					transform: rotateY(0deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(40px);
+					transform: rotateY(0deg) translateZ(40px);
+				}
+			}
+			
+			@keyframes front-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(40px);
+					transform: rotateY(0deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(55px);
+					transform: rotateY(0deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(55px);
+					transform: rotateY(0deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(40px);
+					transform: rotateY(0deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(0deg) translateZ(40px);
+					transform: rotateY(0deg) translateZ(40px);
+				}
+			}
+			
+			.cube .sides .back {
+				-webkit-animation: back-animation 3s ease infinite;
+				animation: back-animation 3s ease infinite;
+				-webkit-animation-delay: 100ms;
+				animation-delay: 100ms;
+				-webkit-transform: rotateY(-180deg) translateZ(40px);
+				transform: rotateY(-180deg) translateZ(40px);
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-transform-origin: 50% 50%;
+				transform-origin: 50% 50%;
+			}
+			
+			@-webkit-keyframes back-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(40px);
+					transform: rotateY(-180deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(55px);
+					transform: rotateY(-180deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(55px);
+					transform: rotateY(-180deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(40px);
+					transform: rotateY(-180deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(40px);
+					transform: rotateY(-180deg) translateZ(40px);
+				}
+			}
+			
+			@keyframes back-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(40px);
+					transform: rotateY(-180deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(55px);
+					transform: rotateY(-180deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(55px);
+					transform: rotateY(-180deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(40px);
+					transform: rotateY(-180deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(-180deg) translateZ(40px);
+					transform: rotateY(-180deg) translateZ(40px);
+				}
+			}
+			
+			.cube .sides .left {
+				-webkit-animation: left-animation 3s ease infinite;
+				animation: left-animation 3s ease infinite;
+				-webkit-animation-delay: 100ms;
+				animation-delay: 100ms;
+				-webkit-transform: rotateY(-90deg) translateZ(40px);
+				transform: rotateY(-90deg) translateZ(40px);
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-transform-origin: 50% 50%;
+				transform-origin: 50% 50%;
+			}
+			
+			@-webkit-keyframes left-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(40px);
+					transform: rotateY(-90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(55px);
+					transform: rotateY(-90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(55px);
+					transform: rotateY(-90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(40px);
+					transform: rotateY(-90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(40px);
+					transform: rotateY(-90deg) translateZ(40px);
+				}
+			}
+			
+			@keyframes left-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(40px);
+					transform: rotateY(-90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(55px);
+					transform: rotateY(-90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(55px);
+					transform: rotateY(-90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(40px);
+					transform: rotateY(-90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(-90deg) translateZ(40px);
+					transform: rotateY(-90deg) translateZ(40px);
+				}
+			}
+			
+			.cube .sides .right {
+				-webkit-animation: right-animation 3s ease infinite;
+				animation: right-animation 3s ease infinite;
+				-webkit-animation-delay: 100ms;
+				animation-delay: 100ms;
+				-webkit-transform: rotateY(90deg) translateZ(40px);
+				transform: rotateY(90deg) translateZ(40px);
+				-webkit-animation-fill-mode: forwards;
+				animation-fill-mode: forwards;
+				-webkit-transform-origin: 50% 50%;
+				transform-origin: 50% 50%;
+			}
+			
+			@-webkit-keyframes right-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(40px);
+					transform: rotateY(90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(55px);
+					transform: rotateY(90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(55px);
+					transform: rotateY(90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(40px);
+					transform: rotateY(90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(40px);
+					transform: rotateY(90deg) translateZ(40px);
+				}
+			}
+			
+			@keyframes right-animation {
+				0% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(40px);
+					transform: rotateY(90deg) translateZ(40px);
+				}
+				20% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(55px);
+					transform: rotateY(90deg) translateZ(55px);
+				}
+				70% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(55px);
+					transform: rotateY(90deg) translateZ(55px);
+				}
+				90% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(40px);
+					transform: rotateY(90deg) translateZ(40px);
+				}
+				100% {
+					opacity: 1;
+					-webkit-transform: rotateY(90deg) translateZ(40px);
+					transform: rotateY(90deg) translateZ(40px);
+				}
+			}
+			/*<------游戏漂------->*/
+		</style>
+	</head>
+
+	<body>
+		<table style="margin-top: -80px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 1px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/hobby_drift.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 1px;float: right;">
+			</td>
+		</table>
+		<div align="center" style="margin-top: 80px;">
+			<h3>约会漂</h3>
+
+			<div class="hobby" id="appointment" style="width: 90%;height: 170px;">
+				<img id="headimgurl" src="../icon/account.png" style="height: 30px;float: left; margin-left: 15px;margin-top: 15px;border-radius: 50%;" />
+				<div class="hobby_dirft_null"></div>
+				<img src="../icon/search_ta.png" style="height: 30px;" />
+			</div>
+
+			<h3>宠物漂</h3>
+
+			<div class="hobby" id="pet" style="width: 90%;height: 170px;">
+				<canvas id="c">
+					</canvas>
+			</div>
+
+			<h3>游戏漂</h3>
+
+			<div class="hobby" id="game" style="width: 90%;height: 170px;">
+				<div style="height: 90px;"></div>
+				<div class="container">
+					<div class="cube">
+						<div class="sides">
+							<div class="top"></div>
+							<div class="right"></div>
+							<div class="bottom"></div>
+							<div class="left"></div>
+							<div class="front"></div>
+							<div class="back"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h3>电影漂</h3>
+
+			<div class="hobby" id="movie" style="width: 90%;height: 170px;">
+				<section>
+					<div class="at-at">
+						<div class="at-at-content">
+							<div class="at-at-body">
+								<div class="at-at-head">
+									<div class="at-at-neck">
+										<div class="neck-ribs">
+											<div class="neck-cable-first"></div>
+											<div class="neck-cable-second"></div>
+											<div class="neck-cable-last"></div>
+											<i></i><i></i><i></i><i></i>
+										</div>
+										<div class="neck-bg"></div>
+									</div>
+									<div class="head-bg">
+										<div class="head-snout">
+											<div class="in-head-snout"></div>
+											<div class="head-snout-gun"></div>
+										</div>
+										<i class="head-bg-first"></i>
+										<i class="head-bg-second"></i>
+									</div>
+									<div class="head">
+										<div class="head-chin">
+											<i class="head-chin-bg-first"></i>
+											<i class="head-chin-bg-second"></i>
+											<i class="head-gun"></i>
+											<i class="fire"><i></i><i></i><i></i></i>
+										</div>
+									</div>
+									<i class="head-left-bg"></i>
+									<i class="head-top-bg"></i>
+								</div>
+								<div class="at-at-body-left">
+									<i class="at-at-body-left-bg-1"></i>
+									<i class="at-at-body-left-bg-2"></i>
+									<i class="at-at-body-left-bg-3"></i>
+									<i class="at-at-body-left-bg-4"></i>
+									<i class="at-at-body-left-bg-5"></i>
+									<div class="at-at-body-left-bg"></div>
+								</div>
+								<div class="at-at-body-right">
+									<i class="at-at-body-right-bg-1"></i>
+									<i class="at-at-body-right-bg-2"></i>
+									<i class="at-at-body-right-bg-3"></i>
+									<i class="at-at-body-right-bg-4"></i>
+									<i class="at-at-body-right-bg-5"></i>
+									<div class="at-at-body-right-bg"></div>
+								</div>
+								<div class="at-at-body-bottom">
+									<div class="at-at-body-bottom-bg"><i></i><i></i><i></i></div>
+									<div class="body-bottom-left"></div>
+								</div>
+								<div class="at-at-body-bg">
+									<i></i><i></i><i></i><i></i>
+									<div class="i"></div>
+								</div>
+								<div class="at-at-body-bg-first-block">
+									<i class="at-at-body-bg-first-block-item-1"></i>
+									<i class="at-at-body-bg-first-block-item-2"></i>
+									<i class="at-at-body-bg-first-block-item-3"></i>
+								</div>
+								<div class="at-at-body-bg-second-block">
+									<i class="at-at-body-bg-second-block-item-1"></i>
+									<i class="at-at-body-bg-second-block-item-2"></i>
+								</div>
+								<div class="at-at-body-bg-third-block">
+									<i class="at-at-body-bg-third-block-item-1"></i>
+									<i class="at-at-body-bg-third-block-item-2"></i>
+									<i class="at-at-body-bg-third-block-item-3"></i>
+								</div>
+							</div>
+							<div class="dark-bg">
+								<i class="dark-bg-right"></i>
+							</div>
+						</div>
+						<div class="leg-content leg-front">
+							<div class="leg-first-joint"><i></i></div>
+							<div class="leg-first">
+								<i class="leg-first-hr-a"></i>
+								<i class="leg-first-hr-b"></i>
+								<div class="in-first-leg">
+									<div class="leg-second-joint"><i></i></div>
+									<div class="leg-second">
+										<i class="leg-second-hr"></i>
+										<div class="in-second-leg">
+											<div class="foot-joint"><i class="foot-ankle"><i class="foot-ankle-bg"></i></i>
+											</div>
+											<div class="foot-ankle-bottom"></div>
+											<div class="foot-ankle-space"></div>
+											<div class="foot">
+												<div class="foot-bottom"></div>
+												<div class="foot-land"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="leg-content leg-rear">
+							<div class="leg-first-joint"><i></i></div>
+							<div class="leg-first">
+								<i class="leg-first-hr-a"></i>
+								<i class="leg-first-hr-b"></i>
+								<div class="in-first-leg">
+									<div class="leg-second-joint"><i></i></div>
+									<div class="leg-second">
+										<i class="leg-second-hr"></i>
+										<div class="in-second-leg">
+											<div class="foot-joint"><i class="foot-ankle"><i class="foot-ankle-bg"></i></i>
+											</div>
+											<div class="foot-ankle-bottom"></div>
+											<div class="foot-ankle-space"></div>
+											<div class="foot">
+												<div class="foot-bottom"></div>
+												<div class="foot-land"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="leg-content leg-front-back">
+							<div class="leg-first-joint"><i></i></div>
+							<div class="leg-first">
+								<i class="leg-first-hr-a"></i>
+								<i class="leg-first-hr-b"></i>
+								<div class="in-first-leg">
+									<div class="leg-second-joint"><i></i></div>
+									<div class="leg-second">
+										<i class="leg-second-hr"></i>
+										<div class="in-second-leg">
+											<div class="foot-joint"><i class="foot-ankle"><i class="foot-ankle-bg"></i></i>
+											</div>
+											<div class="foot-ankle-bottom"></div>
+											<div class="foot-ankle-space"></div>
+											<div class="foot">
+												<div class="foot-bottom"></div>
+												<div class="foot-land"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="leg-content leg-rear-back">
+							<div class="leg-first-joint"><i></i></div>
+							<div class="leg-first">
+								<i class="leg-first-hr-a"></i>
+								<i class="leg-first-hr-b"></i>
+								<div class="in-first-leg">
+									<div class="leg-second-joint"><i></i></div>
+									<div class="leg-second">
+										<i class="leg-second-hr"></i>
+										<div class="in-second-leg">
+											<div class="foot-joint"><i class="foot-ankle"><i class="foot-ankle-bg"></i></i>
+											</div>
+											<div class="foot-ankle-bottom"></div>
+											<div class="foot-ankle-space"></div>
+											<div class="foot">
+												<div class="foot-bottom"></div>
+												<div class="foot-land"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="bg">
+						<i class="star star-1"></i>
+						<i class="star star-2"></i>
+						<i class="star star-3"></i>
+						<i class="star star-4"></i>
+						<i class="star star-5"></i>
+						<i class="star star-6"></i>
+						<i class="star-small star-small-1"></i>
+						<i class="star-small star-small-2"></i>
+						<i class="star-small star-small-3"></i>
+						<i class="star-small star-small-4"></i>
+						<i class="star-small star-small-5"></i>
+						<i class="star-small star-small-6"></i>
+						<i class="star-small star-small-7"></i>
+						<i class="star-small star-small-8"></i>
+						<i class="star-small star-small-9"></i>
+						<i class="star-small star-small-10"></i>
+					</div>
+					<i class="moon"></i>
+					<i class="mountain-first">
+		<i class="mountain-shadow"></i>
+					</i>
+					<i class="mountain-second">
+		<i class="mountain-shadow"></i>
+					<span class="mountain-top"></span>
+					</i>
+					<div class="first-bg">
+						<div class="first-bg-anim">
+							<i class="first"></i>
+							<i class="second"></i>
+							<i class="third"></i>
+							<i class="last"></i>
+						</div>
+						<div class="second-bg-anim">
+							<div class="first-rock-content">
+								<div class="rock-content rock-content-1">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-2">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-3">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-4">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-5">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-6">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+							</div>
+							<div class="second-rock-content">
+								<div class="rock-content rock-content-1">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-2">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-3">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-4">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-5">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+								<div class="rock-content rock-content-6">
+									<i class="rock rock-big rock-1"></i>
+									<i class="rock rock-big rock-2"></i>
+									<i class="rock rock-big rock-3"></i>
+									<i class="rock rock-middle rock-7"></i>
+									<i class="rock rock-middle rock-8"></i>
+									<i class="rock rock-middle rock-9"></i>
+									<i class="rock rock-middle rock-10"></i>
+									<i class="rock rock-middle rock-11"></i>
+									<i class="rock rock-middle rock-12"></i>
+									<i class="rock rock-middle rock-13"></i>
+									<i class="rock rock-middle rock-14"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="space-ship space-ship-small">
+						<i class="space-ship-wing"></i>
+						<i class="space-ship-bg"><i class="space-ship-gun"></i></i>
+					</div>
+					<div class="space-ship space-ship-big">
+						<i class="space-ship-wing"></i>
+						<i class="space-ship-bg"><i class="space-ship-gun"></i></i>
+					</div>
+				</section>
+			</div>
+
+			</br>
+			</br>
+		</div>
+
+	</body>
+	<script src="../js/jquery.gradientify.min.js"></script>
+	<script>
+		var mine = JSON.parse(localStorage.getItem("users"));
+		var width = $(window).width();
+
+		//背景色
+		$(document).ready(function() {
+			$("#appointment").gradientify({
+				gradients: [{
+						start: [49, 76, 172],
+						stop: [242, 159, 191]
+					},
+					{
+						start: [255, 103, 69],
+						stop: [240, 154, 241]
+					},
+					{
+						start: [33, 229, 241],
+						stop: [235, 236, 117]
+					}
+				]
+			});
+		});
+		$(document).ready(function() {
+			$("#game").gradientify({
+				gradients: [{
+						start: [255, 103, 69],
+						stop: [240, 154, 241]
+
+					},
+					{
+						start: [49, 76, 172],
+						stop: [242, 159, 191]
+					},
+					{
+						start: [33, 229, 241],
+						stop: [235, 236, 117]
+					}
+				]
+			});
+		});
+		$(document).ready(function() {
+			$("#pet").gradientify({
+				gradients: [{
+
+						start: [33, 229, 241],
+						stop: [235, 236, 117]
+					},
+					{
+						start: [255, 103, 69],
+						stop: [240, 154, 241]
+					},
+					{
+						start: [49, 76, 172],
+						stop: [242, 159, 191]
+					}
+				]
+			});
+		});
+		$(document).ready(function() {
+			$("#movie").gradientify({
+				gradients: [{
+
+						start: [33, 229, 241],
+						stop: [235, 236, 117]
+					},
+					{
+						start: [49, 76, 172],
+						stop: [242, 159, 191]
+					},
+					{
+
+						start: [255, 103, 69],
+						stop: [240, 154, 241]
+					}
+				]
+			});
+		});
+
+		//约会漂动画
+		;
+		(function() {
+			'use strict';
+
+			var c = document.getElementById('c');
+			var ctx = c.getContext('2d');
+			var w = width * 3;
+			var h = 200 * 2;
+			var cx = w / 2;
+			var cy = h / 2;
+			var P = function(x, y) {
+				this.x = x;
+				this.y = y;
+				this.vx = 0;
+				this.vy = 0;
+				this.r = 1 + Math.random() * 5;
+				this.sa = Math.random() * Math.PI * 2;
+				this.ea = Math.random() * Math.PI * 2;
+				this.rt = Math.random() * Math.PI * 2;
+				this.vrt = 0;
+				this.h = 0;
+			};
+			P.prototype = {
+				constructor: P,
+				update: function() {
+					this.vx += Math.random() * 0.1 - 0.05;
+					this.vy += Math.random() * 0.1 - 0.05;
+					this.vrt += Math.random() * 0.02 - 0.01;
+					this.x += this.vx;
+					this.y += this.vy;
+					this.rt += this.vrt;
+
+					var dx = cx - this.x;
+					var dy = cy - this.y;
+					var d = Math.sqrt(dx * dx + dy * dy);
+
+					this.h = dx / d * 36;
+
+					if(this.x < 0) {
+						this.x = 0;
+						this.vx *= -1;
+					}
+					if(this.x > w) {
+						this.x = w;
+						this.vx *= -1;
+					}
+					if(this.y < 0) {
+						this.y = 0;
+						this.vy *= -1;
+					}
+					if(this.y > h) {
+						this.y = h;
+						this.vy *= -1;
+					}
+				},
+				render: function(ctx) {
+					ctx.save();
+					ctx.strokeStyle = 'black';
+					ctx.fillStyle = 'hsla(' + this.h + ', 100%, 50%, 0.5)';
+					ctx.translate(this.x, this.y);
+					ctx.rotate(this.rt);
+					ctx.beginPath();
+					ctx.arc(0, 0, this.r, this.sa, this.ea);
+					ctx.fill();
+					ctx.stroke();
+					ctx.restore();
+				}
+			};
+
+			var ps = [];
+			var p;
+			var ctr = 200;
+
+			for(var i = 0; i < ctr; i++) {
+				p = new P(Math.random() * w, Math.random() * h);
+				ps.push(p);
+			}
+
+			requestAnimationFrame(function loop() {
+				requestAnimationFrame(loop);
+				ctx.clearRect(0, 0, w, h);
+				for(var i = 0; i < ctr; i++) {
+					p = ps[i];
+					p.update();
+					p.render(ctx);
+				}
+				for(var i = 0; i < ctr; i++) {
+					var p1 = ps[i];
+					for(var j = i + 1; j < ctr; j++) {
+						var p2 = ps[j];
+						var dx = p1.x - p2.x;
+						var dy = p1.y - p2.y;
+						var d = Math.sqrt(dx * dx + dy * dy);
+						if(d < 50) {
+							ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+							ctx.beginPath();
+							ctx.moveTo(p1.x, p1.y);
+							ctx.lineTo(p2.x, p2.y);
+							ctx.stroke();
+						}
+					}
+				}
+			});
+
+		})();
+		//页面设置
+		$(function() {
+			$("#headimgurl").attr("src", mine.user_headimgurl);
+			$("#appointment").bind("click", function() {
+				if(mine.user_tryst_state == 0 || mine.user_tryst_state == null) {
+					alert("请前往个人资料设置，选择参加约会漂");
+				}
+				if(mine.user_tryst_state == 1) {
+					location.href = "start_drift.html?type=4";
+				}
+			});
+			$("#pet").bind("click", function() {
+				if(mine.user_tryst_state == 0 || mine.user_tryst_state == null || mine.user_hobby_pet == null || mine.user_hobby_pet == 0) {
+					alert("请前往个人资料设置，选择参加约会漂,并设置您的兴趣");
+				} else {
+					location.href = "start_drift.html?type=2";
+				}
+			});
+			$("#game").bind("click", function() {
+				if(mine.user_tryst_state == 0 || mine.user_tryst_state == null || mine.user_hobby_game == null || mine.user_hobby_game == 0) {
+					alert("请前往个人资料设置，选择参加约会漂,并设置您的兴趣");
+				} else {
+					location.href = "start_drift.html?type=1";
+				}
+			});
+			$("#movie").bind("click", function() {
+				if(mine.user_tryst_state == 0 || mine.user_tryst_state == null || mine.user_hobby_movie == null || mine.user_hobby_movie == 0) {
+					alert("请前往个人资料设置，选择参加约会漂,并设置您的兴趣");
+				} else {
+					location.href = "start_drift.html?type=3";
+				}
+			});
+		})
+	</script>
+
+</html>

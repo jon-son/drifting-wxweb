@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title>漂茶选择</title>
+
+		<link href="../css/layout.min.css" rel="stylesheet" />
+		<link href="../css/scs.min.css" rel="stylesheet" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<style>
+			#myAddrs {
+				width: 60%;
+				font-size: 16px;
+				border: 1px solid #bababa;
+				border-radius: 4px;
+				padding: 10px;
+				color: gray;
+			}
+		</style>
+	</head>
+
+	<body>
+		<table style="height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/start_drift_head.png" style="height: 35px;margin-top: -25px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+		<div id="city_word">
+
+		</div>
+		<h4 align="center" id="city_word">请选择漂茶目的地</h4><br /><br />
+		<div style="text-align:center">
+			<input type="text" readonly placeholder="Click me to pick an address" id="myAddrs" name="addr" data-key="19-291-3058" value="广东省 深圳市 南山区" />
+		</div>
+		<h4 align="center" id="sex_word">请选择性别</h4>
+		<div id="set_user_sex" class="reveal_sex" align="center">
+			<img id="boy" src="../icon/boy.png" style="width: 20%;margin-right: 10%;border-radius: 50%;border: 1px solid #EAEAEA;" />
+			<img id="girl" src="../icon/girl.png" style="width: 20%;margin-left: 10%;border-radius: 50%;border: 1px solid #EAEAEA;" />
+		</div>
+		<div align="center">
+			<img id="start" src="../icon/search.png" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);width: 25%;border-radius: 15px;" />
+		</div>
+
+		<script src="../js/city/jquery.scs.min.js"></script>
+		<script src="../js/city/QPLAddrArr.min.js"></script>
+		<script src="../js/get.js"></script>
+		<script>
+			$(function() {
+				var width = $(window).width();
+				var height = $(window).height();
+				var type = GetRequest();
+				var sex = 0;
+				$("#city_word").css("height", height / 8 + "px")
+				$("#sex_word").css("margin-top", height / 9 + "px");
+				$("#set_user_sex").css("margin-top", height / 10 + "px");
+				$("#start").css("margin-top", height * 0.1 + "px");
+				$("#boy").bind("click", function() {
+					$("#boy").css("background-image", "linear-gradient(to top, #fff1eb 0%, #ace0f9 100%)");
+					$("#boy").css("border", "1px solid #fff1eb");
+					$("#girl").css("background-image", "");
+					$("#girl").css("border", "1px solid #eaeaea");
+					sex = 1;
+				});
+				$("#girl").bind("click", function() {
+					$("#girl").css("background-image", "linear-gradient(to top, #feada6 0%, #f5efef 100%)");
+					$("#girl").css("border", "1px solid #fff1eb");
+					$("#boy").css("background-image", "");
+					$("#boy").css("border", "1px solid #eaeaea");
+					sex = 2;
+				});
+				$("#start").bind("click", function() {
+					if(sex != 0) {
+						var city = $("#myAddrs").val();
+						location.href = "show.html?sex=" + sex +"&type="+type+ "&city=" + city;
+
+					} else {
+						alert("请选择性别");
+					}
+
+				});
+
+				/**
+				 * 通过数组id获取地址列表数组
+				 *
+				 * @param {Number} id
+				 * @return {Array} 
+				 */
+				function getAddrsArrayById(id) {
+					var results = [];
+					if(addr_arr[id] != undefined)
+						addr_arr[id].forEach(function(subArr) {
+							results.push({
+								key: subArr[0],
+								val: subArr[1]
+							});
+						});
+					else {
+						return;
+					}
+					return results;
+				}
+				/**
+				 * 通过开始的key获取开始时应该选中开始数组中哪个元素
+				 *
+				 * @param {Array} StartArr
+				 * @param {Number|String} key
+				 * @return {Number} 
+				 */
+				function getStartIndexByKeyFromStartArr(startArr, key) {
+					var result = 0;
+					if(startArr != undefined)
+						startArr.forEach(function(obj, index) {
+							if(obj.key == key) {
+								result = index;
+								return false;
+							}
+						});
+					return result;
+				}
+
+				//bind the click event for 'input' element
+				$("#myAddrs").click(function() {
+					var PROVINCES = [],
+						startCities = [],
+						startDists = [];
+					//Province data，shall never change.
+					addr_arr[0].forEach(function(prov) {
+						PROVINCES.push({
+							key: prov[0],
+							val: prov[1]
+						});
+					});
+					//init other data.
+					var $input = $(this),
+						dataKey = $input.attr("data-key"),
+						provKey = 1, //default province 北京
+						cityKey = 36, //default city 北京
+						distKey = 37, //default district 北京东城区
+						distStartIndex = 0, //default 0
+						cityStartIndex = 0, //default 0
+						provStartIndex = 0; //default 0
+
+					if(dataKey != "" && dataKey != undefined) {
+						var sArr = dataKey.split("-");
+						if(sArr.length == 3) {
+							provKey = sArr[0];
+							cityKey = sArr[1];
+							distKey = sArr[2];
+
+						} else if(sArr.length == 2) { //such as 台湾，香港 and the like.
+							provKey = sArr[0];
+							cityKey = sArr[1];
+						}
+						startCities = getAddrsArrayById(provKey);
+						startDists = getAddrsArrayById(cityKey);
+						provStartIndex = getStartIndexByKeyFromStartArr(PROVINCES, provKey);
+						cityStartIndex = getStartIndexByKeyFromStartArr(startCities, cityKey);
+						distStartIndex = getStartIndexByKeyFromStartArr(startDists, distKey);
+					}
+					var navArr = [{ //3 scrollers, and the title and id will be as follows:
+						title: "省",
+						id: "scs_items_prov"
+					}, {
+						title: "市",
+						id: "scs_items_city"
+					}, {
+						title: "区",
+						id: "scs_items_dist"
+					}];
+					SCS.init({
+						navArr: navArr,
+						onOk: function(selectedKey, selectedValue) {
+							$input.val(selectedValue).attr("data-key", selectedKey);
+						}
+					});
+					var distScroller = new SCS.scrollCascadeSelect({
+						el: "#" + navArr[2].id,
+						dataArr: startDists,
+						startIndex: distStartIndex
+					});
+					var cityScroller = new SCS.scrollCascadeSelect({
+						el: "#" + navArr[1].id,
+						dataArr: startCities,
+						startIndex: cityStartIndex,
+						onChange: function(selectedItem, selectedIndex) {
+							distScroller.render(getAddrsArrayById(selectedItem.key), 0); //re-render distScroller when cityScroller change
+						}
+					});
+					var provScroller = new SCS.scrollCascadeSelect({
+						el: "#" + navArr[0].id,
+						dataArr: PROVINCES,
+						startIndex: provStartIndex,
+						onChange: function(selectedItem, selectedIndex) { //re-render both cityScroller and distScroller when provScroller change
+							cityScroller.render(getAddrsArrayById(selectedItem.key), 0);
+							distScroller.render(getAddrsArrayById(cityScroller.getSelectedItem().key), 0);
+						}
+					});
+				});
+			});
+		</script>
+
+	</body>
+
+</html>

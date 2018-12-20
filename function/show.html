@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<title></title>
+		<style>
+			body,
+			html {
+				padding: 0;
+				margin: 0;
+				font-size: 20px;
+			}
+			
+			a {
+				text-decoration: none;
+				color: black;
+			}
+			
+			p {
+				height: 15px;
+			}
+			
+			.user_name {
+				font-size: 15px;
+				margin-left: 10px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				height: 20px;
+			}
+			
+			.message {
+				font-size: 10px;
+				margin-left: 20px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+			
+			.user_headimgurl {
+				height: 40px;
+				border-radius: 50%;
+				margin-left: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div>
+			<table style="margin-top: -55px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+				<td style="width: 75px;float: left;">
+					<a href="javascript:history.back(-1);">
+						<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+					</a>
+				</td>
+				<td align="center">
+					<img src="../icon/show.png" style="height: 35px;margin-top: 5px;" />
+				</td>
+				<td style="width: 75px;float: right;">
+					<img src="../icon/next_show.png" onclick="reload()" style="height: 35px;margin-top: 5px;" id="save" />
+				</td>
+			</table>
+			<table id="table" style="width: 100%;margin-top: 55px;"></table>
+			<script src="../js/get.js"></script>
+			<script>
+				var sex;
+				var width = $(window).width();
+				var mine = JSON.parse(localStorage.getItem("users"));
+				$(function() {
+
+					sex =GetRequest(1);
+					var type = GetRequest(2);
+
+					var location = GetRequest(3);
+					$.ajax({
+						type: "get",
+						contentType: "application/json",
+						url: "http://www.xxxx.com/api/users?type=tearandom&teatype=" + type + "&sex=" + sex + "&location=" + location + "&openid=" + mine.wx_openid,
+						async: true,
+						success: function(res) {
+					
+							var trs = [];
+							var tds = [];
+							var trDom;
+							for(var i = 0; i < res.length; i++) {
+
+								if(res[i].user_message == null || res[i].user_message == "") {
+									res[i].user_message = "未留下个性签名"
+								}
+								sessionStorage.setItem(res[i].id, JSON.stringify(res[i]));
+								trDom = $('<tr></tr>');
+								var td1 = "<td style='width: 10%;'><img src='" + res[i].user_headimgurl + "' class='user_headimgurl' /></td>";
+								var td2 = "<td style='width: 55%;'><p class='user_name'>" + res[i].user_name + "</p><p class='message'>" + res[i].user_message + "</p></td>";
+								var td3 = "<td style='width: 25%;'>" +
+									"<img onclick='greet(this.id)' id='" + res[i].id + "' src='../icon/greet.png' style='margin-right: 2%;border-radius: 15px;background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);height: 20px;' />" +
+									"<img onclick='drift(this.id)' id='" + res[i].id + "' src='../icon/start_drift.png' style='border-radius: 15px;background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);height: 20px;' /></td>"
+								$(td1 + td2 + td3).appendTo(trDom);
+								trs.push(trDom);
+							}
+							for(var j = 0; j < trs.length; j++) {
+
+								$(trs[j]).appendTo($('#table'));
+								$(".message").css("width", width * 0.4 + "px");
+								$(".user_name").css("width", width * 0.3 + "px");
+							}
+
+						},
+					});
+				});
+
+				function greet(id) {
+					location.href = "../state/greet.html?openid=" + id;
+				}
+
+				function drift(id) {
+					location.href = "../pay/pay.html?openid=" + id + "&sex=" + sex;
+				}
+
+				function reload() {
+					location.reload();
+				}
+			</script>
+
+</html>
