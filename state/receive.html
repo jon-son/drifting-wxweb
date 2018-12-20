@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<title></title>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<style>
+			body,
+			html {
+				padding: 0;
+				margin: 0;
+				font-size: 15px;
+			}
+			
+			.list {
+				height: 50px;
+				border-bottom: 1px solid #EAEAEA;
+				background-color: white;
+				font-size: 17px;
+			}
+			
+			.name_p {
+				width: 120px;
+				height: 15px;
+				font-size: 12px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				margin-left: 30px;
+			}
+			
+			.continue {
+				border-radius: 20px;
+				background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+				width: 100%;
+				float: right;
+				margin-right: 20px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<table style="margin-top: -80px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/receive_tea.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+		<table id="receive" style="margin-top: 80px;">
+
+			<!--<tr class='list' style='width=100%;'>
+				<td style='width: 15%;float:left;'><img src='../img/132.jpg' style='width: 100%;margin-left: 20px;border-radius: 50%;' /></td>
+				<td style='width: 30%;float:left;'>
+					<p class='name_p'>123000000000000000001</p>
+					<p class='name_p'>有您的漂茶，请查收！</p>
+				</td>
+				<td style='width: 30%'><img src="../icon/yes.png" style="width: 30%;" /><img src="../icon/no.png" style="margin-left: 15%;width: 30%;" /></td>
+			</tr>
+			<tr style="height: 20px;"></tr>-->
+		</table>
+	</body>
+	<script>
+		var mine = JSON.parse(localStorage.getItem("users"));
+		var num = 0;
+		get_receive_list(num);
+		$(window).scroll(function() {
+			var h = $(window).height() * 0.98; //浏览器窗口的高度
+			var y = $(window).scrollTop(); //滚动条位置
+			if(y - h >= 0) { //滚动条位置-窗口高度>=0表示已经置底了
+				get_receive_list(num);
+			}
+		})
+
+		function get_receive_list(offset) {
+			$.ajax({
+				url: "http://www.xxxx.com/api/teas/" + mine.wx_openid + "?type=receivedlist&offset=" + offset,
+				type: "get",
+				async: true,
+				success: function(res) {
+					num += 10;
+					for(var i = 0; i < res.length; i++) {
+
+						$.ajax({
+							type: "get",
+							url: "http://www.xxxx.com/api/teas/" + res[i].id + "?type=main",
+							async: true,
+							success: function(main_res) {
+								sessionStorage.setItem(main_res.id, JSON.stringify(main_res));
+								$.ajax({
+									type: "get",
+									contentType: "application/json",
+									url: "http://www.xxxx.com/api/users/" + main_res.from_openid + "?type=main",
+									async: false,
+									success: function(re_res) {
+										sessionStorage.setItem(main_res.from_openid, JSON.stringify(re_res));
+
+										var tr1 = "<tr class='list' style='width=100%;'>";
+										var td1 = "<td id='td1"+main_res.from_openid+"' onclick='information(this.id)' style='width: 15%;float:left;'><img src='" + re_res.user_headimgurl + "' style='width: 100%;margin-left: 20px;border-radius: 50%;' /></td>";
+										var td2 = "<td id='td2"+main_res.from_openid+"' onclick='information(this.id)' style='width: 30%;float:left;'><p class='name_p'>" + re_res.user_name + "</p><p id='state_word" + main_res.id + "' class='name_p'></p></td>"
+										var td3 = "<td style='width: 30%'><img src='../icon/yes.png' id='yes" + main_res.id + "' style='width: 30%;' onclick='accept(this.id)' /><img src='../icon/no.png' id='no" + main_res.id + "'  onclick='unaccept(this.id)' style='margin-left: 15%;width: 30%;' /></td>";
+										var tr2 = "</tr><tr style=’height: 20px;'></tr>";
+										$("#receive").append(tr1 + td1 + td2 + td3 + tr2);
+										if(main_res.state == 0 || main_res.state == "0") {
+
+											$("#state_word" + main_res.id).text("有您的漂茶，请查收！");
+										}
+										if(main_res.state == 1 || main_res.state == "1") {
+											$("#yes" + main_res.id).css("display", "none");
+											$("#no" + main_res.id).css("display", "none");
+											$("#state_word" + main_res.id).text("已接收漂茶！");
+										}
+										if(main_res.state == 2 || main_res.state == "2") {
+											$("#yes" + main_res.id).css("display", "none");
+											$("#no" + main_res.id).css("display", "none");
+											$("#state_word" + main_res.id).text("已拒收漂茶！");
+										}
+										if(main_res.state == 3 || main_res.state == "3") {
+											$("#yes" + main_res.id).css("display", "none");
+											$("#no" + main_res.id).css("display", "none");
+											$("#state_word" + main_res.id).text("超时未接收漂茶！");
+										}
+									},
+								});
+
+							}
+						});
+					}
+				}
+			})
+		}
+
+		function information(id) {
+			id = id.substring(3, id.length);
+			location.href = "../center/information.html?openid=" + id;
+		}
+
+		function accept(id) {
+			id = id.substring(3, id.length);
+			$.ajax({
+				type: "put",
+				url: "http://www.xxxx.com/api/teas/" + id + "?type=accept",
+				async: true,
+				contentType: "application/json",
+				success: function(res) {
+					console.log(res);
+					$("#yes" + id).css("display", "none");
+					$("#no" + id).css("display", "none");
+					alert("你已经成功接收漂茶");
+					location.reload();
+				},
+				error: function(e) {
+					console.log(e);
+					alert("接收漂茶失败");
+				}
+
+			});
+		}
+
+		function unaccept(id) {
+			id = id.substring(2, id.length);
+			$.ajax({
+				type: "put",
+				url: "http://www.xxxx.com/api/teas/" + id + "?type=unaccept",
+				async: true,
+				contentType: "application/json",
+				success: function(res) {
+					console.log(res);
+
+					$("#yes" + id).css("display", "none");
+					$("#no" + id).css("display", "none");
+					alert("你已拒绝该漂茶");
+					location.reload();
+				},
+				error: function(e) {
+					console.log(e);
+					alert("拒绝漂茶失败");
+				}
+
+			});
+		}
+	</script>
+
+</html>

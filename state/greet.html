@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<title></title>
+		<style>
+			body,
+			html {
+				padding: 0;
+				margin: 0;
+				font-size: 20px;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: #FAFAFA;">
+		<table style="margin-top:-70px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 1px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="../icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="../icon/greets.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 1px;float: right;">
+			</td>
+		</table>
+		<div id="taking" style="margin-top: 70px;width: 100%;">
+			<!--<table style="width: 100%;font-size: 15px;">
+			<tr>
+				<td style="width: 15%;">
+					<img src="../img/132.jpg" style="border-radius: 50%;width: 80%;margin-left: 10%;" />
+				</td>
+				<td style="width: 55%;">
+					<p style='width:90%;background-color: white;border-radius: 20px;margin: 10px;padding:10px;word-wrap:break-word;word-break:break-all;overflow: hidden;'>132132132132132132132132132132132</p>
+				</td>
+				<td style="width: 30%;">
+
+				</td>
+			</tr>
+		</table>
+		<table style="width: 100%;font-size: 15px;">
+			<tr>
+				<td style="width: 30%;">
+
+				</td>
+				<td style="width: 55%;">
+					<p style='float: right;width:45px;background-color: white;border-radius: 20px;margin: 10px;padding:10px;word-wrap:break-word;word-break:break-all;overflow: hidden;'>322</p>
+				</td>
+				<td style="width: 15%;">
+					<img src="../img/132.jpg" style="border-radius: 50%;width: 80%;margin-left: 20%;" />
+				</td>
+			</tr>
+		</table>-->
+		</div>
+
+		<div style="height: 55px;width: 100%;"></div>
+		<div id="input_div" style="position:fixed;bottom:0;width: 100%;height: 55px; background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);">
+			<input id="word" placeholder=" 请输入50字以内的话" maxlength="50" style="text-indent:10px;width: 75%;margin-top: 10px;height:35px;border-radius: 20px;outline：none;border: 0px;margin-left: 4%;" />
+			<img id="send" src="../icon/sent.png" style="border-radius: 20px;vertical-align: middle;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);height: 30px;margin-left: 2%;" />
+		</div>
+	</body>
+	<script src="../js/get.js"></script>
+
+	<script>
+		var openid = GetRequest();
+		var mine = JSON.parse(localStorage.getItem("users"));
+		var width = $(window).width();
+		var hegiht = $(window).height();
+		var other_headimgurl;
+		var now_chatid;
+		
+		$.ajax({
+			type: "get",
+			url: "http://www.xxxx.com/api/users/" + openid + "?type=main",
+			async: false,
+			success: function(res) {
+				other_headimgurl = res.user_headimgurl;
+				
+			},
+		});
+		get_greet()
+		function check_new(id) {
+			$.ajax({
+				type: "get",
+				url: "http://www.xxxx.com/api/greets/" + mine.wx_openid + "?receiveid=" + openid,
+				async: true,
+				success: function(res) {
+					for(var j = 0; j < res.length; j++) {
+						if(res[j].id == id && j != res.length - 1) {
+							var num = j;
+							now_chatid = res[res.length - 1].id
+							add_tr(res, num + 1);
+							break;
+
+						}
+					}
+
+				},
+			})
+		}
+
+		function add_tr(res, num) {
+			for(var i = num; i < res.length; i++) {
+				var send_openid, text1;
+				send_openid = res[i].send_openid;
+				text1 = res[i].text;
+				var length = text1.length;
+				var word_width;
+				if(length * 15 > width * 0.4) {
+					word_width = width * 0.4 + "px";
+				} else {
+					word_width = length * 15 + "px";
+				}
+
+				if(send_openid == openid) {
+					var is_scroll = 0;
+
+					if($(window).scrollTop() >= $(document).height() - $(window).height()) {
+						is_scroll = 1;
+					}
+
+					var tb1 = "<table style='width: 100%;font-size: 15px;'><tr><td style='width: 15%;'>" +
+						"<img src='" + other_headimgurl + "' style='border-radius: 50%;width: 80%;margin-left: 10%;' /></td>" +
+						"<td style='width: 55%;'><p style='width:" + word_width + ";background-color: white;border-radius: 20px;margin: 10px;padding:10px;word-wrap:break-word;word-break:break-all;overflow: hidden;'>" + text1 +
+						"</p></td><td style='width: 30%;'></td></tr></table>"
+			
+					$("#taking").append(tb1);
+					
+					
+					if(is_scroll == 1) {
+						scrollToEnd();
+					}
+				}
+				if(send_openid == mine.wx_openid&&num==0) {
+					var tb2 = "<table style='width: 100%;font-size: 15px;'><tr><td style='width: 30%;'></td><td style='width: 55%;'>" +
+						"<p style='float: right;width:" + word_width + ";background-color: white;border-radius: 20px;margin: 10px;padding:10px;word-wrap:break-word;word-break:break-all;overflow: hidden;'>" + text1 + "</p>" +
+						"</td><td style='width: 15%;'><img src='" + mine.user_headimgurl + "' style='border-radius: 50%;width: 80%;margin-left: 20%;' /></td></tr></table>"
+					$("#taking").append(tb2);
+				}
+
+			}
+		}
+
+		function get_greet() {
+			$.ajax({
+				type: "get",
+				url: "http://www.xxxx.com/api/greets/" + mine.wx_openid + "?receiveid=" + openid,
+				async: false,
+				success: function(res) {
+					if(res.length!=0){
+						now_chatid = res[res.length - 1].id;
+					}
+					
+					$(function() {
+						setInterval(function working() {
+							check_new(now_chatid)
+						}, 1000);
+					})
+					add_tr(res, 0);
+					scrollToEnd();
+
+				}
+
+			});
+		}
+
+		function scrollToEnd() { //滚动到底部
+			var h = $(document).height() - $(window).height();
+			$(document).scrollTop(h);
+		}
+
+		$(function() {
+			$("#send").bind("click", function() {
+				var word = $("#word").val();
+				$("#word").val("");
+				if(word != "" && word != null && word != undefined) {
+					$.ajax({
+						type: "post",
+						contentType: "application/json",
+						url: "http://www.xxxx.com/api/greets?sendid=" + mine.wx_openid + "&receiveid=" + openid,
+						data: JSON.stringify({
+							text: word,
+						}),
+						async: true,
+						success: function(res) {
+							if(res.status == true) {
+
+								var length = word.length;
+								var word_width;
+								if(length * 15 > width * 0.4) {
+									word_width = width * 0.4 + "px";
+								} else {
+									word_width = length * 15 + "px";
+								}
+
+								var tb2 = "<table id='taking' style='width: 100%;font-size: 15px;'><tr><td style='width: 30%;'></td><td style='width: 55%;'>" +
+									"<p style='float: right;width:" + word_width + ";background-color: white;border-radius: 20px;margin: 10px;padding:10px;word-wrap:break-word;word-break:break-all;overflow: hidden;'>" + word + "</p>" +
+									"</td><td style='width: 15%;'><img src='" + mine.user_headimgurl + "' style='border-radius: 50%;width: 80%;margin-left: 20%;' /></td></tr></table>"
+
+								$("#taking").append(tb2);
+
+								scrollToEnd();
+							}
+
+							if(res.status == false) {
+								alert("发送失败,招呼次数上限")
+							}
+
+						},
+						error: function(e) {
+							console.log(e);
+						}
+					});
+				}
+			})
+		});
+	</script>
+
+</html>
