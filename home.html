@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<title>去漂流</title>
+		<link rel="stylesheet" href="css/home.css" type="text/css" />
+		<link rel="stylesheet" href="css/reveal.css">
+
+		<link rel="stylesheet" href="css/flickity-docs.css" media="screen">
+		<link rel="stylesheet" href="css/cloud.css">
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=2QGDpynTgKsIrjI3xXjjPIGdn45mDO1b"></script>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	</head>
+
+	<body>
+		<div class="main" align="center" id="main">
+			<div class="head">
+				<div class="introduce">
+					<table class="personal_center_tb" align="left" style="margin-top: 5px;margin-left: 10px;">
+						<tr class="personal_center_tb_tr">
+							<td class="picture">
+								<a href="personal_center.html"><img id="user_headimgurl" src="icon/cry.png"></a>
+							</td>
+							<td class="username">
+								<a href="personal_center.html">
+									<p style="margin-left: 10px;" id="user_name"></p>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div id="introduce_scroll">
+					<table align="left" style="margin-top: 5px;margin-left: 10px;">
+						<tr>
+							<td class="picture_scroll">
+								<a href="personal_center.html"><img id="scroll_user_headimgurl" src="icon/cry.png"></a>
+							</td>
+							<td class="username_scroll">
+								<a href="personal_center.html">
+									<p style="margin-left: 10px;" id="scroll_user_name"></p>
+								</a>
+							</td>
+						</tr>
+					</table>
+
+				</div>
+				<div class="state">
+
+					<table class="drift_state" style="width: 100%;">
+						<tr class="drift_state_tr">
+							<td style="width: 33.33%;">
+								<a href="state/send.html">
+
+									<img class="send" src="icon/send_icon.png" />
+
+								</a>
+							</td>
+							<td style="width: 33.33%;">
+								<a href="state/greet_list.html">
+
+									<img class="greet" src="icon/greet_icon.png" />
+
+								</a>
+							</td>
+							<td style="width: 33.33%;">
+								<a href="state/receive.html">
+
+									<img class="receive" src="icon/receive_icon.png" />
+
+								</a>
+							</td>
+						</tr>
+
+					</table>
+
+					<div class="drift">
+						<div class="to_drift">
+							<a href="function/start_drift.html?type=0"><img style="border-radius: 30px;background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);" src="icon/todrift.png" /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="content-wrap">
+				<div style="height: 20px;"></div>
+				<h3>达人秀</h3>
+				<div class="example duo">
+					<div class="example__demo duo__cell">
+						<div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+							<div class="gallery-cell" style="height: 150px;">
+								<a data-reveal-id="myModal">
+									<img id="user_headimgurl0" src="icon/cry.png" style="border-radius: 5px;" />
+									<p id="name0" style="margin-top: -2px;font-size: 12px;width:80px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+
+								</a>
+							</div>
+							<div class="gallery-cell" style="height: 150px;">
+								<a data-reveal-id="myModa2">
+									<img id="user_headimgurl1" src="icon/cry.png" style="border-radius: 5px;" />
+									<p id="name1" style="margin-top: -2px;font-size: 12px;width:80px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+								</a>
+							</div>
+							<div class="gallery-cell" style="height: 150px;">
+								<a data-reveal-id="myModa3">
+
+									<img id="user_headimgurl2" src="icon/cry.png" style="border-radius: 5px;" />
+									<p id="name2" style="margin-top: -2px;font-size: 12px;width:80px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+
+								</a>
+							</div>
+							<div class="gallery-cell" style="height: 150px;">
+								<a data-reveal-id="myModa4">
+									<img id="user_headimgurl3" src="icon/cry.png" style="border-radius: 5px;" />
+									<p id="name3" style="margin-top: -2px;font-size: 12px;width:80px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+								</a>
+							</div>
+							<div class="gallery-cell" style="height: 150px;">
+								<a data-reveal-id="myModa5">
+									<img id="user_headimgurl4" src="icon/cry.png" style="border-radius: 5px;" />
+									<p id="name4" style="margin-top: -2px;font-size: 12px;width:80px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div align="center">
+				<div id="myModal" class="reveal-modal">
+					<div style="overflow: hidden;" id="openid0">
+						<img id="show_user_headimgurl0" class="show_user_headimgurl" />
+					</div>
+					<img clas="show_user_headimgurl_full" onclick="see(0)" id="show_user_headimgurl_full0" style="position:absolute;z-index:999;border-radius: 50%;width: 35%;margin-left: -17.5%;" />
+					<img id="show_user_sex_full0" style="position:absolute;z-index:9999;border-radius: 50%;width: 10%;margin-left: 7%;" />
+					<p id="show_name0"></p>
+					<p id="show_message0" style=" font-size: 10px;width:100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+					<img id="show_greet0" onclick="greet(0)" src="icon/greet_show.png" style="width: 30%;margin-right: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					<img id="show_drift0" onclick="drift(0)" src="icon/to_ta_drift.png" style="width: 30%;margin-left: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					</br>
+					<a class="close-reveal-modal">&#215;</a>
+				</div>
+				<div id="myModa2" class="reveal-modal">
+					<div style="overflow: hidden;" id="openid1">
+						<img id="show_user_headimgurl1" class="show_user_headimgurl" />
+					</div>
+					<img clas="show_user_headimgurl_full" onclick="see(1)" id="show_user_headimgurl_full1" style="position:absolute;z-index:999;border-radius: 50%;width: 35%;margin-left: -17.5%;" />
+					<img id="show_user_sex_full1" style="position:absolute;z-index:9999;border-radius: 50%;width: 10%;margin-left: 7%;" />
+					<p id="show_name1"></p>
+					<p id="show_message1" style=" font-size: 10px;width:100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+					<img id="show_greet1" onclick="greet(1)" src="icon/greet_show.png" style="width: 30%;margin-right: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					<img id="show_drift1" onclick="drift(1)" src="icon/to_ta_drift.png" style="width: 30%;margin-left: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					</br>
+					<a class="close-reveal-modal">&#215;</a>
+				</div>
+				<div id="myModa3" class="reveal-modal">
+					<div style="overflow: hidden;" id="openid2">
+						<img id="show_user_headimgurl2" class="show_user_headimgurl" />
+					</div>
+					<img clas="show_user_headimgurl_full" onclick="see(2)" id="show_user_headimgurl_full2" style="position:absolute;z-index:999;border-radius: 50%;width: 35%;margin-left: -17.5%;" />
+					<img id="show_user_sex_full2" style="position:absolute;z-index:9999;border-radius: 50%;width: 10%;margin-left: 7%;" />
+					<p id="show_name2"></p>
+					<p id="show_message2" style=" font-size: 10px;width:100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+					<img id="show_greet2" onclick="greet(2)" src="icon/greet_show.png" style="width: 30%;margin-right: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					<img id="show_drift2" onclick="drift(2)" src="icon/to_ta_drift.png" style="width: 30%;margin-left: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					</br>
+					<a class="close-reveal-modal">&#215;</a>
+				</div>
+				<div id="myModa4" class="reveal-modal">
+					<div style="overflow: hidden;" id="openid3">
+						<img id="show_user_headimgurl3" class="show_user_headimgurl" />
+					</div>
+					<img clas="show_user_headimgurl_full" onclick="see(3)" id="show_user_headimgurl_full3" style="position:absolute;z-index:999;border-radius: 50%;width: 35%;margin-left: -17.5%;" />
+					<img id="show_user_sex_full3" style="position:absolute;z-index:9999;border-radius: 50%;width: 10%;margin-left: 7%;" />
+					<p id="show_name3"></p>
+					<p id="show_message3" style=" font-size: 10px;width:100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+					<img id="show_greet3" onclick="greet(3)" src="icon/greet_show.png" style="width: 30%;margin-right: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					<img id="show_drift3" onclick="drift(3)" src="icon/to_ta_drift.png" style="width: 30%;margin-left: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					</br>
+					<a class="close-reveal-modal">&#215;</a>
+				</div>
+				<div id="myModa5" class="reveal-modal">
+					<div style="overflow: hidden;" id="openid4">
+						<img id="show_user_headimgurl4" class="show_user_headimgurl" />
+					</div>
+					<img clas="show_user_headimgurl_full" onclick="see(4)" id="show_user_headimgurl_full4" style="position:absolute;z-index:999;border-radius: 50%;width: 35%;margin-left: -17.5%;" />
+					<img id="show_user_sex_full4" style="position:absolute;z-index:9999;border-radius: 50%;width: 10%;margin-left: 7%;" />
+					<p id="show_name4"></p>
+					<p id="show_message4" style=" font-size: 10px;width:100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+					<img id="show_greet4" onclick="greet(4)" src="icon/greet_show.png" style="width: 30%;margin-right: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					<img id="show_drift4" onclick="drift(4)" src="icon/to_ta_drift.png" style="width: 30%;margin-left: 5%;border-radius: 20px;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);" />
+					</br>
+					<a class="close-reveal-modal">&#215;</a>
+				</div>
+			</div>
+
+			<h3>兴趣漂</h3>
+			<div style="height: 20px;"></div>
+			<a href="function/hobby_drift.html" style="width: 100%;height: 170px;">
+				<div class="hobby" id="hobby">
+					<canvas id="c">
+					</canvas>
+
+				</div>
+			</a>
+			<div style="height: 20px;"></div>
+			<h3>附近的人</h3>
+			<div style="height: 20px;"></div>
+			<a href="nearby_person.html" style="width: 100%;height: 170px;">
+				<div class="nearby">
+					<img src="icon/see_my_loc.png" class="nearby_img" height="50px" style="margin-top: 80px;" />
+				</div>
+			</a>
+			<div class="map">
+				<div style="height: 20px;"></div>
+				<h3>附近店铺</h3>
+				<div style="height: 20px;"></div>
+				<a href="map.html" onclick="clicks()">
+					<div class="main_window">
+						<div class="cloud" data-type="white_1" style="top: 248px;" data-speed="1"></div>
+						<div class="cloud" data-type="white_2" style="top: 278px;" data-speed="2"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+
+		<div class="foot" align="center" style="background-color: #808080;font-size: 10px;color: white; margin-top: 80px;">
+			</br>
+			<a href="http://www.miitbeian.gov.cn/" style="text-decoration:none;color: white;"><span>备案信息:粤ICP备xxxxxx</span></a>
+			</br>
+			<span>Copyright © 2017-2018</span></br>
+			<span>xxxx科技有限公司.All Rights Reserved</span></br>
+			</br>
+		</div>
+	</body>
+	<script src="js/get.js"></script>
+	<script src="js/flickity-docs.min.js"></script>
+	<script type="text/javascript" src="js/jquery.reveal.js"></script>
+	<script src="js/jquery.gradientify.min.js"></script>
+
+	<script>
+		sessionStorage.setItem("save", "0");
+		sessionStorage.setItem("click_pay", "0");
+		var geo = JSON.parse(sessionStorage.getItem("geo"));
+		var openid = GetRequest();
+		var width = $(window).width();
+		var heigth = $(window).height();
+		//获取当前定位
+		if(geo == null) {
+			sessionStorage.setItem("geo", JSON.stringify({
+				state: 0,
+				lng: "",
+				lat: ""
+			}));
+			var geolocation = new BMap.Geolocation();
+			geolocation.getCurrentPosition(function(r) {
+				if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+					$.ajax({
+						type: "put",
+						url: "http://www.xxxx.com/api/users/" + openid + "?type=geo",
+						async: true,
+						contentType: "application/json",
+						data: JSON.stringify({
+							lat: r.point.lat,
+							lng: r.point.lng,
+						}),
+						success: function(res) {
+							sessionStorage.setItem("geo", JSON.stringify({
+								state: 1,
+								lng: r.point.lng,
+								lat: r.point.lat
+							}));
+						},
+						error:function(e){
+							console.log(e)
+						}
+					});
+
+				} else {
+					sessionStorage.setItem("geo", JSON.stringify({
+						state: 0,
+						lng: "",
+						lat: ""
+					}));
+					alert('failed' + this.getStatus());
+				}
+			}, {
+				enableHighAccuracy: true
+			})
+		}
+		if(geo != null) {
+			if(geo.state == 0) {
+				var geolocation = new BMap.Geolocation();
+				geolocation.getCurrentPosition(function(r) {
+					if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+						sessionStorage.setItem("geo", JSON.stringify({
+							state: 1,
+							lng: r.point.lng,
+							lat: r.point.lat
+						}));
+					} else {
+						sessionStorage.setItem("geo", JSON.stringify({
+							state: 0,
+							lng: "",
+							lat: ""
+						}));
+						alert('failed' + this.getStatus());
+					}
+				}, {
+					enableHighAccuracy: true
+				})
+			}
+
+		}
+
+		//绑定滚动条事件  
+		$(window).bind("scroll", function() {
+			var sTop = $(window).scrollTop();
+			var sTop = parseInt(sTop);
+			if(sTop >= 45) {
+				var obj = document.getElementById("introduce_scroll");
+				obj.style.display = "block";
+			} else if(sTop < 45) {
+				var obj = document.getElementById("introduce_scroll");
+				obj.style.display = "none";
+			}
+		});
+		$(function() {
+			$(".nearby_img").mouseover(function() {
+				if(!($(this).is(":animated"))) {
+					$(this).animate({
+							"top": "-15px",
+						}, 200).animate({
+							"top": "-0px",
+						}, 200)
+						.animate({
+							"top": "-12px",
+						}, 200).animate({
+							"top": "-0px",
+						}, 200)
+						.animate({
+							"top": "-6px",
+						}, 200).animate({
+							"top": "-1px",
+						}, 200)
+						.animate({
+							"top": "-1px",
+						}, 200).animate({
+							"top": "-0px",
+						}, 200);
+				}
+			});
+		});
+
+		if(openid != undefined) {
+			$.ajax({
+				type: "put",
+				url: "http://www.xxxx.com/api/teas/" + openid + "?type=update",
+				contentType: "application/json",
+				async: true,
+				success: function(res) {
+					console.log(res);
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+
+			var url = "http://www.xxxx.com/api/users/" + openid;
+			$.ajax({
+				type: "get",
+				contentType: "application/json",
+				url: url,
+				async: true,
+				success: function(res) {
+					$("#user_name").text(res.user_name);
+					$("#scroll_user_name").text(res.user_name);
+					$("#scroll_user_headimgurl").attr("src", res.user_headimgurl);
+					$("#user_headimgurl").attr("src", res.user_headimgurl);
+					localStorage.setItem("users", JSON.stringify(res));
+
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+			
+			
+			$.ajax({
+				type: "get",
+				contentType: "application/json",
+				url: "http://www.xxxx.com/api/users?type=random&openid=" + openid,
+				async: true,
+				success: function(res) {
+					for(var i = 0; i < 5; i++) {
+						sessionStorage.setItem(res[i].id, JSON.stringify(res[i]));
+						$("#name" + i).text(res[i].user_name)
+						if(res[i].user_sex == 1) {
+							$("#show_user_sex_full" + i).attr("src", "icon/sex_boy.png")
+						}
+						if(res[i].user_sex == 2) {
+							$("#show_user_sex_full" + i).attr("src", "icon/sex_girl.png")
+						}
+						$("#user_headimgurl" + i).attr("src", res[i].user_headimgurl);
+						$("#show_user_headimgurl" + i).attr("src", res[i].user_headimgurl);
+						$("#show_user_headimgurl_full" + i).attr("src", res[i].user_headimgurl);
+						$("#show_name" + i).text(res[i].user_name);
+						if(res[i].user_message == null || res[i].user_message == "") {
+							$("#show_message" + i).text("未留下个性签名");
+						} else {
+							$("#show_message" + i).text(res[i].user_message);
+						}
+
+						$("#openid" + i).attr("class", res[i].id);
+						$("#openid" + i).css("height", width * 0.5 + "px");
+						$("#show_user_headimgurl_full" + i).css("margin-top", -width * 0.3 + "px");
+						$("#show_user_sex_full" + i).css("margin-top", -width * 0.15 + "px");
+						$("#show_user_headimgurl" + i).css("filter", "rl(blur.svg#blur);-webkit-filter: blur(8px)");
+						$("#show_user_headimgurl" + i).css("-moz-filter", "blur(8px)");
+						$("#show_user_headimgurl" + i).css("-ms-filter", "blur(8px)");
+						$("#show_user_headimgurl" + i).css("filter", "blur(8px)");
+						$("#show_user_headimgurl" + i).css("filter", "progid:DXImageTransform.Microsoft.Blur(PixelRadius=8, MakeShadow=false)");
+
+					}
+
+				},
+			});
+		}
+
+		function greet(id) {
+			var show_openid = $("#openid" + id).attr("class");
+			location.href = "state/greet.html?openid=" + show_openid;
+		}
+
+		function drift(id) {
+			var sex = 0;
+			var show_openid = $("#openid" + id).attr("class");
+			console.log(show_openid);
+			var sex_src = $("#show_user_sex_full" + id).attr("src");
+			if(sex_src == "icon/sex_boy.png") {
+				sex = 1
+			}
+			if(sex_src == "icon/sex_girl.png") {
+				sex = 2;
+			}
+			location.href = "pay/pay.html?openid=" + show_openid + "&sex=" + sex;
+		}
+
+		function see(id) {
+			var show_openid = $("#openid" + id).attr("class");
+			location.href = "center/information.html?openid=" + show_openid;
+
+		}
+		//兴趣背景
+		$(document).ready(function() {
+			$(".hobby").gradientify({
+				gradients: [{
+						start: [49, 76, 172],
+						stop: [242, 159, 191]
+					},
+					{
+						start: [255, 103, 69],
+						stop: [240, 154, 241]
+					},
+					{
+						start: [33, 229, 241],
+						stop: [235, 236, 117]
+					}
+				]
+			});
+			$(".nearby").gradientify({
+				gradients: [{
+						start: [33, 229, 241],
+						stop: [235, 236, 117]
+					},
+					{
+						start: [49, 76, 172],
+						stop: [242, 159, 191]
+					},
+					{
+						start: [255, 103, 69],
+						stop: [240, 154, 241]
+					}
+				]
+			});
+		});
+
+		//兴趣动画
+		;
+		(function() {
+			'use strict';
+
+			var c = document.getElementById('c');
+			var ctx = c.getContext('2d');
+			var w = width * 3;
+			var h = 200 * 2;
+			var cx = w / 2;
+			var cy = h / 2;
+			var P = function(x, y) {
+				this.x = x;
+				this.y = y;
+				this.vx = 0;
+				this.vy = 0;
+				this.r = 1 + Math.random() * 5;
+				this.sa = Math.random() * Math.PI * 5;
+				this.ea = Math.random() * Math.PI * 2;
+				this.rt = Math.random() * Math.PI * 2;
+				this.vrt = 0;
+				this.h = 0;
+			};
+			P.prototype = {
+				constructor: P,
+				update: function() {
+					this.vx += Math.random() * 0.1 - 0.05;
+					this.vy += Math.random() * 0.1 - 0.05;
+					this.vrt += Math.random() * 0.02 - 0.01;
+					this.x += this.vx;
+					this.y += this.vy;
+					this.rt += this.vrt;
+
+					var dx = cx - this.x;
+					var dy = cy - this.y;
+					var d = Math.sqrt(dx * dx + dy * dy);
+
+					this.h = dx / d * 36;
+
+					if(this.x < 0) {
+						this.x = 0;
+						this.vx *= -1;
+					}
+					if(this.x > w) {
+						this.x = w;
+						this.vx *= -1;
+					}
+					if(this.y < 0) {
+						this.y = 0;
+						this.vy *= -1;
+					}
+					if(this.y > h) {
+						this.y = h;
+						this.vy *= -1;
+					}
+				},
+				render: function(ctx) {
+					ctx.save();
+					ctx.strokeStyle = 'black';
+					ctx.fillStyle = 'hsla(' + this.h + ', 100%, 50%, 0.5)';
+					ctx.translate(this.x, this.y);
+					ctx.rotate(this.rt);
+					ctx.beginPath();
+					ctx.arc(0, 0, this.r, this.sa, this.ea);
+					ctx.fill();
+					ctx.stroke();
+					ctx.restore();
+				}
+			};
+
+			var ps = [];
+			var p;
+			var ctr = 200;
+
+			for(var i = 0; i < ctr; i++) {
+				p = new P(Math.random() * w, Math.random() * h);
+				ps.push(p);
+			}
+
+			requestAnimationFrame(function loop() {
+				requestAnimationFrame(loop);
+				ctx.clearRect(0, 0, w, h);
+				for(var i = 0; i < ctr; i++) {
+					p = ps[i];
+					p.update();
+					p.render(ctx);
+				}
+				for(var i = 0; i < ctr; i++) {
+					var p1 = ps[i];
+					for(var j = i + 1; j < ctr; j++) {
+						var p2 = ps[j];
+						var dx = p1.x - p2.x;
+						var dy = p1.y - p2.y;
+						var d = Math.sqrt(dx * dx + dy * dy);
+						if(d < 50) {
+							ctx.strokeStyle = 'rgba(0, 0, 0, 0.5)';
+							ctx.beginPath();
+							ctx.moveTo(p1.x, p1.y);
+							ctx.lineTo(p2.x, p2.y);
+							ctx.stroke();
+						}
+					}
+				}
+			});
+
+		})();
+	</script>
+
+</html>

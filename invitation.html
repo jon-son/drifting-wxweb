@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script src="js/get.js"></script>
+	<script>
+		var invitation_code=GetRequest();
+		location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=xxxxxxxxxxxxxxxx&redirect_uri=http://www.xxxx.com/api/invitationcheck?invitationcode="+invitation_code+"&response_type=code&scope=snsapi_base"
+	</script>
+</html>

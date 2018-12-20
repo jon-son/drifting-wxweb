@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+		<link rel="stylesheet" href="css/personal.css">
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="js/personal.js"></script>
+		<title>个人中心</title>
+		<style>
+			body,
+			html {
+				margin: 0;
+				padding: 0;
+				font-family: 微软雅黑;
+			}
+			
+			a {
+				text-decoration: none;
+				color: white;
+			}
+			
+			.head {
+				background-color: #009fd9;
+				height: 180px;
+				width: 100%;
+				color: white;
+				font-weight: 600;
+		
+			}
+			
+			.list {
+				width: 100%;
+				margin-top: -15px;
+			}
+			
+			.information_table {
+				margin-top: 20px;
+			}
+			
+			.user li {
+				float: left;
+			}
+			
+			.list tr {
+				height: 60px;
+			}
+			
+			.list img {
+				width: 30px;
+				margin-left: 20px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<div id="main">
+			<div class="head">
+				<p style="margin-left: 10px;">
+					<a href="javascript:history.back(-1);" style="color: white;"><img src="icon/back_white.png" style=" height: 40px;margin-top: 10px;" /></a>
+				</p>
+				<table class="information_table">
+					<tr>
+						<td>
+							<img id="user_headimgurl" src="icon/cry.png" style="height: 50px;margin-left: 20px; border-radius: 50%;"><img id="user_sex" src="icon/sex_boy.png" style="height: 20px;margin-left: -15px;" />
+						</td>
+						<td>
+							<div style="height: 25px;"></div>
+							<p id="user_name" style="font-size: 20px;margin-left: 10px;width:120px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+							<p id="user_message" style=" font-size: 10px;margin-left: 10px;width:100px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"></p>
+
+						</td>
+						<td>
+							<a id="information"><img src="icon/more_white.png" style="height: 30px;" /></a>
+
+						</td>
+
+					</tr>
+
+				</table>
+			</div>
+			<div class="wave-box" style="width: 100%;">
+
+				<div class="marquee-box marquee-up" id="marquee-box">
+					<div class="marquee">
+						<div class="wave-list-box" id="wave-list-box1">
+							<ul>
+								<li><img style="width: 100%;height: 30px;" alt="波浪" src="icon/wave_02.png"></li>
+							</ul>
+						</div>
+						<div class="wave-list-box" id="wave-list-box2">
+							<ul>
+								<li><img style="width: 100%;height: 30px;" alt="波浪" src="icon/wave_02.png"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="marquee-box" id="marquee-box3">
+					<div class="marquee">
+						<div class="wave-list-box" id="wave-list-box4">
+							<ul>
+								<li><img style="width: 100%;height: 30px;" alt="波浪" src="icon/wave_01.png"></li>
+							</ul>
+						</div>
+						<div class="wave-list-box" id="wave-list-box5">
+							<ul>
+								<li><img style="width: 100%;height: 30px;" alt="波浪" src="icon/wave_01.png"></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+			<table class="list">
+				<tr onclick="location.href='center/friends.html';">
+					<td style="width: 70px;">
+						<img src="icon/account.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>我的漂友</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/coupon.html';">
+
+					<td>
+						<img src="icon/integral.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>我的漂茶券</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/code.html';">
+
+					<td>
+						<img src="icon/skip.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>邀请好友</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/set_information.html';">
+
+					<td>
+						<img src="icon/set.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>修改资料</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/set_location.html';">
+
+					<td>
+						<img src="icon/map.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>更改地区</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/binding.html';">
+
+					<td>
+						<img src="icon/Mobile-phone.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>手机绑定</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/feedback.html';">
+
+					<td>
+						<img src="icon/service.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>反馈</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/agreement.html';">
+
+					<td>
+						<img src="icon/office.png" />
+					</td>
+					<td style="border-bottom:1px solid #979797;">
+						<p>用户协议</p>
+					</td>
+				</tr>
+				<tr onclick="location.href='center/about.html';">
+
+					<td>
+						<img src="icon/code.png" />
+					</td>
+					<td>
+						<p>关于</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+		</br>
+	</body>
+	<script>
+		var b = JSON.parse(localStorage.getItem("users"));
+		var save = JSON.parse(sessionStorage.getItem("save"));
+		if(save == "1") {
+			sessionStorage.setItem("save", "0");
+			location.reload();
+		}
+		if(b.user_sex == 1) {
+			document.getElementById("user_sex").src = "icon/sex_boy.png";
+		}
+		if(b.user_sex == 2) {
+			document.getElementById("user_sex").src = "icon/sex_girl.png";
+		}
+		document.getElementById("information").href = "center/information.html?openid=" + b.wx_openid;
+		document.getElementById("user_name").innerHTML = b.user_name;
+		document.getElementById("user_headimgurl").src = b.user_headimgurl;
+		document.getElementById("user_message").innerHTML = b.user_message;
+	</script>
+
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<title>商铺资料</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: 微软雅黑;
+			}
+			
+			a {
+				text-decoration: none;
+			}
+			
+			#head {
+				width: 100%;
+			}
+			
+			#head_img {
+				filter: url(blur.svg#blur);
+				/* FireFox, Chrome, Opera */
+				-webkit-filter: blur(8px);
+				/* Chrome, Opera */
+				-moz-filter: blur(8px);
+				-ms-filter: blur(8px);
+				filter: blur(8px);
+				filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=8, MakeShadow=false);
+				/* IE6~IE9 */
+			}
+			
+			#shop_headimgurl {
+				border-radius: 50%;
+			}
+
+
+		</style>
+	</head>
+
+	<body>
+
+		<table style="height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+			<td style="width: 45px;float: left;">
+				<a href="javascript:history.back(-1);" style="color: white;">
+					<img src="icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+				</a>
+			</td>
+			<td align="center">
+				<img src="icon/shop.png" style="height: 35px;margin-top: 5px;" />
+			</td>
+			<td style="width: 45px;float: right;">
+			</td>
+		</table>
+
+		<div id="head" align="center" style="z-index: -1;position :absolute;overflow:hidden;">
+			<img id="head_img" src="icon/account.png" />
+		</div>
+
+		<div id="portrait" align="center">
+			<img id="shop_headimgurl" src="icon/cry.png" />
+		</div>
+		<div align="center">
+			<p style="font-size: 25px;" id="shop_name"></p>
+			<p style="font-size: 12px;margin-top: -10px;" id="shop_time"></p>
+			</div>
+			</br>
+		<div>
+			<div >
+				<p style="width: 80%;margin-left:10%;word-wrap:break-word;word-break:break-all;overflow: hidden;" id="introduce"></p>
+		
+			</div>
+			
+			</br>
+				<p style="font-size: 15px;width: 80%;margin-left:10%;word-wrap:break-word;word-break:break-all;overflow: hidden;" >电话: <span id="shop_phone"></span></p>
+				<p style="font-size: 15px;width: 80%;margin-left:10%;word-wrap:break-word;word-break:break-all;overflow: hidden;" >地址: <span id="shop_loc"></span></p>
+		</div>
+		</br>
+	</body>
+	<script src="js/get.js"></script>
+	<script type="text/javascript">
+		var width = $(window).width();
+		var geoid = GetRequest();
+
+		var url = "http://www.xxxx.com/api/shops/" + geoid + "?type=bygeo";
+
+		$.ajax({
+			type: "get",
+			url: url,
+			async: false,
+			success: function(res) {
+				$("#head_img").attr("src", res.img);
+				$("#shop_headimgurl").attr("src", res.img);
+				$("#head").css("height", width / 4 * 3 + "px");
+				$("#head_img").css("width", width + "px");
+				$("#shop_headimgurl").css("width", width / 4 + "px");
+				$("#shop_headimgurl").css("margin-top", width * 0.45 + "px");
+				$("#shop_name").css("margin-top", width * 0.09 + "px");
+				$("#shop_name").text(res.name)
+				$("#shop_time").text(res.office_hours)
+				$("#shop_phone").text(res.conntact)
+				$("#shop_loc").text(res.shop_location)
+				$("#introduce").text(res.introduce)
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	</script>
+
+</html>

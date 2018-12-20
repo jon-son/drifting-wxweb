@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=xxxxxxxxxxxxxxxx"></script>
+	<title>附近商铺</title>
+</head>
+<style>
+	html,
+	body {
+		margin: 0;
+		padding: 0;
+		font-family: 微软雅黑;
+	}
+	
+	a {
+		text-decoration: none;
+	}
+	
+	.marsk-container {
+		background: #FFFFFF;
+		display: none;
+		position: absolute;
+		position: fixed;
+		top: 0;
+		right: 0;
+		left: 0;
+		bottom: 0px;
+		background: rgba(0, 0, 0, .5);
+		z-index: 10;
+	}
+	
+	#show_map {
+		width: 90%;
+		height: 200px;
+		overflow: hidden;
+		margin: 0;
+		margin-top: 70px;
+		border-radius: 5px;
+		box-shadow: 0 .1px 10px #EAEAEA;
+	}
+</style>
+
+<body>
+	<table style="margin-top: -70px;height: 45px;width: 100%;background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);position: fixed;z-index: 9999;">
+		<td style="width: 1px;float: left;">
+			<a href="javascript:history.back(-1);" style="color: white;">
+				<img src="icon/back_white.png" style=" height: 35px;margin-top: 5px;margin-left: 5px;" />
+			</a>
+		</td>
+		<td align="center">
+			<img src="icon/nearby_shop.png" style="height: 35px;margin-top: 5px;" />
+		</td>
+		<td style="width: 1px;float: right;">
+		</td>
+	</table>
+	<div id="show_map" style="margin-left: 5%;"></div>
+	<div>
+		<div id="show_map_div" style="float: right;margin-right: 15%;margin-top: -30px;">
+
+		</div>
+
+		<table style="width: 85%;margin-top: 20px;" id="list_map">
+
+		</table>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+	var map = new BMap.Map("show_map");
+	var geo = JSON.parse(sessionStorage.getItem("geo"));
+	if(geo.state == 0) {
+		var geolocation = new BMap.Geolocation();
+		geolocation.getCurrentPosition(function(r) {
+			if(this.getStatus() == BMAP_STATUS_SUCCESS) {
+				$.ajax({
+						type: "put",
+						url: "http://www.xxxx.com/api/users/" + openid + "?type=geo",
+						async: true,
+						contentType: "application/json",
+						data: JSON.stringify({
+							lat: r.point.lat,
+							lng: r.point.lng,
+						}),
+						success: function(res) {
+							sessionStorage.setItem("geo", JSON.stringify({
+								state: 1,
+								lng: r.point.lng,
+								lat: r.point.lat
+							}));
+						},
+						error:function(e){
+							console.log(e)
+						}
+					});
+				
+				var mk = new BMap.Marker(r.point);
+				map.centerAndZoom(r.point, 16);
+				map.disableDragging();
+				map.addOverlay(mk);
+				map.panTo(r.point);
+				var img = "<img onclick='panTo(" + r.point.lng + "," + r.point.lat + ")' src='icon/see_my_loc.png' style='width: 30px;float: right;margin-right: 10%;margin-top: -30px; position: absolute;' />"
+				$("#show_map_div").append(img);
+
+				$.ajax({
+					type: "get",
+					url: "http://api.map.baidu.com/geosearch/v3/nearby?ak=rIGBQu5mmNocIypp585YnRTeUThZ6bYX&geotable_id=184601&location=" + r.point.lng + "," + r.point.lat + "&radius=1000",
+					async: false,
+					dataType: "jsonp",
+					success: function(res) {
+						for(var i = 0; i < res.contents.length; i++) {
+							console.log(res)
+
+							var point = new BMap.Point(res.contents[i].location[0], res.contents[i].location[1]);
+							addMarker(point);
+							$.ajax({
+								type: "get",
+								url: "http://www.xxxx.com/api/shops/" + res.contents[i].uid + "?type=bygeo",
+								async: false,
+								success: function(shop_res) {
+									var tr = "<tr style='height: 60px;'><td id='td1" + res.contents[i].uid + "' onclick='shop_information(this.id)' style='width: 12%;'><img src='" + shop_res.img + "' style='height: 40px;border-radius: 50%;margin-left: 20px;' />" +
+										"</td><td id='td2" + res.contents[i].uid + "' onclick='shop_information(this.id)' style='width: 60%'><p style='font-size: 15px;margin-left: 10px;width:200px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>" + shop_res.name +
+										"</p></td><td style='width: 10%;'><img onclick='panTo(" + res.contents[i].location[0] + "," + res.contents[i].location[1] + ")' src='icon/map.png' style='height: 20px;float: right;' /></td></tr>"
+
+									$("#list_map").append(tr);
+								}
+							});
+
+						}
+
+					},
+
+				});
+			} else {
+				alert('failed' + this.getStatus());
+			}
+		}, {
+			enableHighAccuracy: true
+		})
+	} else if(geo.state == 1){
+		var point1 = new BMap.Point(geo.lng, geo.lat);
+		var mk = new BMap.Marker(point1);
+		map.centerAndZoom(point1, 16);
+		map.disableDragging();
+		map.addOverlay(mk);
+		map.panTo(point1);
+		var img = "<img onclick='panTo(" + geo.lng + "," + geo.lat + ")' src='icon/see_my_loc.png' style='width: 30px;float: right;margin-right: 10%;margin-top: -30px; position: absolute;' />"
+		$("#show_map_div").append(img);
+
+		$.ajax({
+			type: "get",
+			url: "http://api.map.baidu.com/geosearch/v3/nearby?ak=xxxxxxxxxxxxx&geotable_id=xxxx&location=" + geo.lng + "," + geo.lat + "&radius=1000",
+			async: false,
+			dataType: "jsonp",
+			success: function(res) {
+				for(var i = 0; i < res.contents.length; i++) {
+					console.log(res)
+
+					var point = new BMap.Point(res.contents[i].location[0], res.contents[i].location[1]);
+					addMarker(point);
+					$.ajax({
+						type: "get",
+						url: "http://www.xxxx.com/api/shops/" + res.contents[i].uid + "?type=bygeo",
+						async: false,
+						success: function(shop_res) {
+							var tr = "<tr style='height: 60px;'><td id='td1" + res.contents[i].uid + "' onclick='shop_information(this.id)' style='width: 12%;'><img src='" + shop_res.img + "' style='height: 40px;border-radius: 50%;margin-left: 20px;' />" +
+								"</td><td id='td2" + res.contents[i].uid + "' onclick='shop_information(this.id)' style='width: 60%'><p style='font-size: 15px;margin-left: 10px;width:200px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>" + shop_res.name +
+								"</p></td><td style='width: 10%;'><img onclick='panTo(" + res.contents[i].location[0] + "," + res.contents[i].location[1] + ")' src='icon/map.png' style='height: 20px;float: right;' /></td></tr>"
+
+							$("#list_map").append(tr);
+						}
+					});
+
+				}
+
+			},
+
+		});
+
+	}
+
+	function shop_information(uid) {
+		uid = uid.substring(3, uid.length);
+		location.href = "shop_information.html?geoid=" + uid;
+
+	}
+
+	function addMarker(point) {
+		var marker = new BMap.Marker(point);
+		map.addOverlay(marker);
+	}
+
+	function panTo(lng, lat) {
+		var pt = new BMap.Point(lng, lat);
+		map.panTo(pt);
+	}
+</script>
+
+</html>

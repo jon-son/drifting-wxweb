@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+
+		<title>选择性别</title>
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	</head>
+
+
+	<body>
+		<h4 align="center" id="word">请选择性别</h4>
+		<div id="set_user_sex" class="reveal_sex" align="center">
+			<img id="boy" src="icon/boy.png" style="width: 20%;margin-right: 10%;border-radius: 50%;border: 1px solid #EAEAEA;" />
+			<img id="girl" src="icon/girl.png" style="width: 20%;margin-left: 10%;border-radius: 50%;border: 1px solid #EAEAEA;" />
+		</div>
+		<div align="center">
+			<img id="next" src="icon/next.png" style="background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);width: 25%;border-radius: 15px;" />
+		</div>
+
+	</body>
+	<script src="js/get.js"></script>
+	<script>
+		var openid = GetRequest();
+		
+		$(function() {
+			var width = $(window).width();
+			var height = $(window).height();
+			var sex = 0;
+			$("#word").css("margin-top", height / 8 + "px");
+			$("#set_user_sex").css("margin-top", height / 5 + "px");
+			$("#next").css("margin-top", height * 0.2 + "px");
+			$("#boy").bind("click",function(){
+				$("#boy").css("background-image","linear-gradient(to top, #fff1eb 0%, #ace0f9 100%)");
+				$("#boy").css("border","1px solid #fff1eb");
+				$("#girl").css("background-image","");
+				$("#girl").css("border","1px solid #eaeaea");
+				sex=1;
+			});
+			$("#girl").bind("click",function(){
+				$("#girl").css("background-image","linear-gradient(to top, #feada6 0%, #f5efef 100%)");
+				$("#girl").css("border","1px solid #fff1eb");
+				$("#boy").css("background-image","");
+				$("#boy").css("border","1px solid #eaeaea");
+				sex=2;
+			});
+			$("#next").bind("click",function(){
+				if(sex!=0){
+				$(location).attr('href', 'location.html?openid=' + openid+"&sex="+sex);
+				
+			}else{
+				alert("请选择性别");
+			}
+			})
+
+		})
+
+	</script>
+
+</html>
